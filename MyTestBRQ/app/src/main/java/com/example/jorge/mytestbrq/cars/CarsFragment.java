@@ -16,11 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.CarsServiceImpl;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
+import com.example.jorge.mytestbrq.detailCar.DetailCarActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,12 +27,12 @@ import java.util.List;
 
 /**
  * Created by jorge on 19/03/2018.
+ * Fragment for Show Cars with Adapter
  */
 
 public class CarsFragment extends Fragment implements CarsContract.View {
 
-    public static String EXTRA_PRODUCT = "PRODUCT";
-    public static String EXTRA_BUNDLE_PRODUCT = "BUNDLE_PRODUCT";
+    public static String EXTRA_CAR_ID = "CAR_ID";
 
     private CarsContract.UserActionsListener mActionsListener;
 
@@ -76,8 +75,6 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         View root = inflater.inflate(R.layout.fragment_cars, container, false);
 
         ImageView shopping  = (ImageView) root.findViewById(R.id.iv_shopping);
@@ -113,17 +110,15 @@ public class CarsFragment extends Fragment implements CarsContract.View {
             mRecyclerView.getLayoutManager().onRestoreInstanceState(mListState);
         }
 
-
         return root;
     }
 
-
-
-
+    /**
+     * Listener which car click
+     */
     ItemListener mItemListener = new ItemListener() {
         @Override
         public void onCarsClick(Cars cars) {
-
             mActionsListener.openDetail(cars);
         }
     };
@@ -161,6 +156,11 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         startActivity(intent);*/
     }
 
+
+    /**
+     * Init RecyclerView fro show list car
+     * @param root
+     */
     private void initRecyclerView(View root){
         mRecyclerView= (RecyclerView) root.findViewById(R.id.rv_car_list);
         mRecyclerView.setAdapter(mListAdapter);
@@ -171,6 +171,9 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
     }
 
+    /**
+     * Adapter for fill the list of the car
+     */
     private static class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
         private List<Cars> mCars;
@@ -200,7 +203,7 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     .placeholder(R.mipmap.ic_launcher)
                     .into(viewHolder.carImage);
 
-            viewHolder.Description.setText(cars.getDescricao());
+            viewHolder.Description.setText(cars.getNome());
         }
 
         public void replaceData(List<Cars> notes) {
@@ -241,16 +244,12 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                 Cars cars = getItem(position);
                 mItemListener.onCarsClick(cars);
 
-            //    Intent intent = new Intent(v.getContext(), ShoppingActivity.class);
-
-           //     Bundle bundle = new Bundle();
-           //     bundle.putSerializable(EXTRA_PRODUCT, cars );
-
-           //     intent.putExtra(EXTRA_BUNDLE_PRODUCT, bundle);
-           //     v.getContext().startActivity(intent);
+                Intent intent = new Intent(v.getContext(), DetailCarActivity.class);
 
 
+                intent.putExtra(EXTRA_CAR_ID, Integer.toString(cars.getId()));
 
+                v.getContext().startActivity(intent);
             }
         }
     }

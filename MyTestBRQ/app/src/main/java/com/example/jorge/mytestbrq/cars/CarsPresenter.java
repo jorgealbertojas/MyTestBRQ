@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by jorge on 19/03/2018.
+ * Presenter for implements Contract Cars
  */
 
 public class CarsPresenter implements CarsContract.UserActionsListener {
@@ -21,6 +22,9 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
         this.mCarsServiceApi = mCarsServiceApi;
     }
 
+    /**
+     * Loading the car call Service Api with data
+     */
     @Override
     public void loadingCars() {
         mCarsContractView.setLoading(true);

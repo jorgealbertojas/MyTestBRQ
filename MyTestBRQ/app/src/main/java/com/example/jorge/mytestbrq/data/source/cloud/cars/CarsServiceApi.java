@@ -22,5 +22,5 @@ public interface CarsServiceApi {
 
     void getCars(CarsServiceCallback<List<Cars>> callback);
 
-    void getCar(String productId, CarsServiceCallback<Cars> callback);
+    void getCar(String carId, CarsServiceCallback<Cars> callback);
 }

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.util.Common;
 
-// Activity for list Cards
+// Activity for list Cars
 public class CarsActivity extends AppCompatActivity {
 
     @Override
@@ -25,13 +25,13 @@ public class CarsActivity extends AppCompatActivity {
     }
 
     /**
-     * Function for int Fragment cars
-     * @param productFragment
+     * Init Fragment for cars
+     * @param carFragment
      */
-    private void initFragment(Fragment productFragment) {
+    private void initFragment(Fragment carFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fl_cars, productFragment);
+        transaction.add(R.id.fl_cars, carFragment);
         transaction.commit();
 
 

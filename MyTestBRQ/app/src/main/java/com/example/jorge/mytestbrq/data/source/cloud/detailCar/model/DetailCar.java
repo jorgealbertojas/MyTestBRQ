@@ -1,14 +1,15 @@
-package com.example.jorge.mytestbrq.data.source.cloud.cars.model;
+package com.example.jorge.mytestbrq.data.source.cloud.detailCar.model;
 
 /**
  * Created by jorge on 19/03/2018.
- * Model for support json http://desafiobrq.herokuapp.com/v1/carro/
  */
 
-public class Cars {
+public class DetailCar {
     private int id;
     private String nome;
+    private String descricao;
     private String marca;
+    private int quantidade;
     private int preco;
     private String imagem;
 
@@ -28,6 +29,13 @@ public class Cars {
         this.nome = nome;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public String getMarca() {
         return marca;
@@ -35,6 +43,14 @@ public class Cars {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public int getPreco() {

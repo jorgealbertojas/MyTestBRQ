@@ -29,8 +29,8 @@ public class CarsServiceImpl implements CarsServiceApi {
      */
     @Override
         public void getCars(final CarsServiceCallback<List<Cars>> callback) {
-            Call<List<Cars>> callProduct = mRetrofit.getCars();
-            callProduct.enqueue(new Callback<List<Cars>>() {
+            Call<List<Cars>> callCars = mRetrofit.getCars();
+            callCars.enqueue(new Callback<List<Cars>>() {
                 @Override
                 public void onResponse(Call<List<Cars>> call, Response<List<Cars>> response) {
                     if(response.code()==200){
