@@ -20,6 +20,9 @@ public interface DetailCarContract {
 
     interface UserActionsListener {
 
+        void savePurchase(String carId, String carName, String carDescription, String carBrand, String quantity, String price, String image, String id);
+
+
         void loadingDetailCar();
 
 

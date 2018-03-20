@@ -24,7 +24,14 @@ public class DetailCarActivity extends AppCompatActivity {
             if (Common.isOnline(this)) {
                 initFragment(id);
             }
+
+
+
+
         }
+
+
+
     }
 
     /**

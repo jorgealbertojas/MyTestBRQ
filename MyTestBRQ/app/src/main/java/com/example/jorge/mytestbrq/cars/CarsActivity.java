@@ -12,6 +12,8 @@ import com.example.jorge.mytestbrq.util.Common;
 // Activity for list Cars
 public class CarsActivity extends AppCompatActivity {
 
+    public static final int REQUEST_ADD_PURCHASE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,6 @@ public class CarsActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.fl_cars, carFragment);
         transaction.commit();
-
 
     }
 

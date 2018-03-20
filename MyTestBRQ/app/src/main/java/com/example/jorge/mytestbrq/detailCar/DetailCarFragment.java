@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,10 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
 
     private TextView mCarDescription;
 
+    private Button mAdd;
+
+    private DetailCar mDetailCar;
+
     public DetailCarFragment() {
     }
 
@@ -43,7 +48,7 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mActionsListener = new DetailCarPresenter(new DetailCarServiceImpl(mId), this);
+        mActionsListener = new DetailCarPresenter(new DetailCarServiceImpl(mId), this,getActivity());
     }
 
     @Override
@@ -63,6 +68,14 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
         mCarImage = (ImageView) root.findViewById(R.id.im_detail_car_image);
         mCarDescription = (TextView) root.findViewById(R.id.tv_detail_description);
 
+        mAdd = (Button) root.findViewById(R.id.b_add);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActionsListener.savePurchase(Integer.toString(mDetailCar.getId()),mDetailCar.getNome(), mDetailCar.getDescricao(),mDetailCar.getMarca(),Integer.toString(mDetailCar.getQuantidade()),Integer.toString(mDetailCar.getPreco()),mDetailCar.getImagem(),Integer.toString(mDetailCar.getId()));
+
+            }
+        });
 
         return root;
     }
@@ -73,16 +86,16 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
 
     }
 
-    /**
-     * Show Detail car in Fragment was select
-     * @param detailCarList
-     */
+
     @Override
-    public void showDetailCar(DetailCar detailCarList) {
-        mCarDescription.setText(detailCarList.getDescricao());
+    public void showDetailCar(DetailCar detailCar) {
+
+        mDetailCar = detailCar;
+
+        mCarDescription.setText(detailCar.getDescricao());
 
         Picasso.with(mCarDescription.getContext())
-                .load(detailCarList.getImagem())
+                .load(detailCar.getImagem())
                 .fit().centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .into(mCarImage);

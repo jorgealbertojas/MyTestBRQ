@@ -28,6 +28,13 @@
             android:textColor="@color/black"
             android:padding="16dp" />
 
+        <ImageView
+            android:id="@+id/iv_shopping_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_description"
+            android:layout_centerHorizontal="true"
+            card_view:srcCompat="@mipmap/ic_launcher_round" />
 
 
     </RelativeLayout>

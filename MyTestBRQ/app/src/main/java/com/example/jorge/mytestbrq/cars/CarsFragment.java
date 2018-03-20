@@ -20,6 +20,7 @@ import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.CarsServiceImpl;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 import com.example.jorge.mytestbrq.detailCar.DetailCarActivity;
+import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -230,11 +231,34 @@ public class CarsFragment extends Fragment implements CarsContract.View {
             public TextView Description;
             private ItemListener mItemListener;
 
+            public ImageView carShopping;
+
             public ViewHolder(View itemView, ItemListener listener) {
                 super(itemView);
                 mItemListener = listener;
                 Description= (TextView) itemView.findViewById(R.id.tv_description);
                 carImage = (ImageView) itemView.findViewById(R.id.im_car_image);
+                carShopping = (ImageView) itemView.findViewById(R.id.iv_shopping_car);
+
+
+                carShopping.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int position = getAdapterPosition();
+                     //   Cars cars = getItem(position);
+                       // mItemListener.onProductClick(cars);
+
+                        Intent intent = new Intent(v.getContext(), ShoppingActivity.class);
+
+                     //   Bundle bundle = new Bundle();
+                     //   bundle.putSerializable(EXTRA_PRODUCT, product );
+
+                      //  intent.putExtra(EXTRA_BUNDLE_PRODUCT, bundle);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+
                 itemView.setOnClickListener(this);
             }
 
