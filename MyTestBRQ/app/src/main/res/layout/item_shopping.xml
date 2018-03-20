@@ -39,4 +39,17 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintStart_toEndOf="@+id/tv_shopping_quantity" />
 
+    <ImageView
+        android:id="@+id/iv_shopping_remove"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </android.support.constraint.ConstraintLayout>

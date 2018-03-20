@@ -129,11 +129,16 @@ public class ShoppingRepository implements ShoppingDataSource{
 
     @Override
     public void activatePurchase(@NonNull String productId, String quantity) {
-        checkNotNull(productId);
-        activatePurchase(getPurchaseWithId(productId),quantity);
 
-        Purchase purchase =getPurchaseWithId(productId);
-        mShoppingLocalDataSource.activatePurchase(purchase.getId(),quantity);
+        if (!quantity.toString().equals("0")) {
+            checkNotNull(productId);
+            activatePurchase(getPurchaseWithId(productId), quantity);
+
+            Purchase purchase = getPurchaseWithId(productId);
+            mShoppingLocalDataSource.activatePurchase(purchase.getId(), quantity);
+        }else{
+            mShoppingLocalDataSource.deletePurchase(productId);
+        }
     }
 
 
@@ -169,6 +174,8 @@ public class ShoppingRepository implements ShoppingDataSource{
         }
         mCachedShopping.clear();
     }
+
+
 
     @Override
     public void deletePurchase(@NonNull String shoppingId) {

@@ -40,6 +40,11 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     }
 
     @Override
+    public void removeItemShopping(@NonNull String removeShoppingId, String quantity) {
+        mShoppingRepository.activatePurchase(removeShoppingId , quantity);
+    }
+
+    @Override
     public void result(int requestCode, int resultCode) {
         // If a task was successfully added, show snackBar
         if (CarsActivity.REQUEST_ADD_PURCHASE == requestCode && Activity.RESULT_OK == resultCode) {
@@ -115,10 +120,7 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
 
 
 
-    @Override
-    public void addNewPurchase() {
-        mShoppingView.showAddPurchase();
-    }
+
 
     @Override
     public void openPurchaseDetails(@NonNull Purchase requestedPurchase) {

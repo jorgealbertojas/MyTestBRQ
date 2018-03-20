@@ -3,12 +3,10 @@ package com.example.jorge.mytestbrq.shopping;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.Purchase;
-import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 import com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout;
 import com.squareup.picasso.Picasso;
 
@@ -35,49 +32,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ShoppingFragment  extends Fragment implements ShoppingContract.View {
 
-    public static String EXTRA_PRODUCT_SHOPPING = "PRODUCT_SHOPPING";
-    public static String EXTRA_BUNDLE_PRODUCT_SHOPPING = "BUNDLE_PRODUCT_SHOPPING";
-
-    public static String EXTRA_SHOPPING_ID = "SHOPPING_ID";
-    public static String EXTRA_BUNDLE_SHOPPING_SHOPPING = "BUNDLE_SHOPPING_SHOPPING";
-
-
     private ShoppingContract.Presenter mPresenter;
 
     private ShoppingAdapter mListAdapter;
 
-
     private View mNoShoppingView;
 
     private LinearLayout mShoppingView;
-
     private TextView mNoShoppingMainView;
     private TextView mNoShoppingAddView;
-    private ImageView mCarImage;
-    private TextView mCode;
-    private TextView mCarName;
-
-    private static Cars mCars;
-
     private static ListView mListView;
-    private static CardView mCarView;
-
-    private static final int LOADER_ID = 101;
 
     public static ShoppingFragment newInstance() {
         return new ShoppingFragment();
     }
 
 
-
-    //  private static Product mProduct;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new ShoppingAdapter(new ArrayList<Purchase>(0), mItemListener);
-
-
     }
 
     /**
@@ -99,10 +73,11 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             mPresenter.activatePurchase(activatedPurchase);
         }
 
-
+        @Override
+        public void onRemovePurchaseClick(String activatedPurchase, String quantity) {
+            mPresenter.removeItemShopping(activatedPurchase, quantity);
+        }
     };
-
-
 
 
     @Override
@@ -116,8 +91,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         mPresenter.start();
 
     }
-
-
 
     @Nullable
     @Override
@@ -143,13 +116,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             }
         });
 
-        mCarImage = (ImageView) root.findViewById(R.id.im_shopping_image);
-        mCarName = (TextView) root.findViewById(R.id.tv_shopping_name);
-        mCode = (TextView) root.findViewById(R.id.tv_code);
-
-        mCarView = (CardView) root.findViewById(R.id.cv_shopping);
-
-
 
         // Set up progress indicator
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
@@ -160,14 +126,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
         );
 
-
-        if (mCars != null){
-            showCars(mCars);
-            mListView.setVisibility(View.GONE);
-        }else{
-            mCarView.setVisibility(View.GONE);
-
-        }
 
         // Set the scrolling view in the custom SwipeRefreshLayout.
         swipeRefreshLayout.setScrollUpChild(mListView);
@@ -195,14 +153,12 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         startActivityForResult(intent, AddPurchaseActivity.REQUEST_ADD_PURCHASE);*/
     }
 
-
-
     @Override
     public void setPresenter(ShoppingContract.Presenter presenter) {
-
-
         mPresenter = checkNotNull(presenter);
     }
+
+
 
     @Override
     public void setLoadingIndicator(final boolean active) {
@@ -223,19 +179,10 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
 
     @Override
     public void showShopping(List<Purchase> listPurchase) {
-
-        //mListView.setAdapter(mListAdapter);
-
         mListAdapter.replaceData(listPurchase);
-
         mShoppingView.setVisibility(View.VISIBLE);
         mNoShoppingView.setVisibility(View.GONE);
     }
-
-
-
-
-
 
     @Override
     public void showPurchaseDetailsUi(String shoppingId) {
@@ -276,7 +223,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
-
     @Override
     public void showNoShopping() {
         showNoShoppingViews("no_shopping_all",
@@ -284,7 +230,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
                 false
         );
     }
-
 
     @Override
     public void showNoActiveShopping() {
@@ -294,8 +239,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
                 false
         );
     }
-
-
 
     @Override
     public void showNoCompletedShopping() {
@@ -309,34 +252,11 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     @Override
     public void showSuccessfullySavedMessage() {
         showMessage("successfully_saved_purchase_message");
-
-
-        showCars(mCars);
-        mListView.setVisibility(View.VISIBLE);
-
-        mCarView.setVisibility(View.GONE);
-
-
     }
 
     @Override
     public boolean isActive() {
         return isAdded();
-    }
-
-
-
-
-    public void showCars(Cars cars) {
-        mCarName.setText(cars.getNome());
-        mCode.setText(Integer.toString(cars.getId()));
-
-        Picasso.with(mCarImage.getContext())
-                .load(cars.getImagem())
-                .fit().centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .into(mCarImage);
-
     }
 
     private void showNoShoppingViews(String mainText, int iconRes, boolean showAddView) {
@@ -347,7 +267,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         // mNoShoppingIcon.setImageDrawable(getResources().getDrawable(iconRes));
         mNoShoppingAddView.setVisibility(showAddView ? View.VISIBLE : View.GONE);
     }
-
 
 
     private static class ShoppingAdapter extends BaseAdapter {
@@ -396,13 +315,14 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             final Purchase purchase = getItem(i);
 
             TextView tvName = (TextView) rowView.findViewById(R.id.tv_shopping_name);
-            TextView tvQuantity = (TextView) rowView.findViewById(R.id.tv_shopping_quantity);
+            final TextView tvQuantity = (TextView) rowView.findViewById(R.id.tv_shopping_quantity);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.iv_shopping_image);
+            ImageView ShoppingRemove = (ImageView) rowView.findViewById(R.id.iv_shopping_remove);
 
             tvName.setText(purchase.getTitleForList());
             tvQuantity.setText(purchase.getQuantity());
 
 
-            ImageView imageView = (ImageView) rowView.findViewById(R.id.iv_shopping_image);
 
             // Active/completed task UI
             Picasso.with(imageView.getContext())
@@ -414,6 +334,15 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             rowView.setBackgroundDrawable(viewGroup.getContext()
                     .getResources().getDrawable(R.drawable.ic_launcher_background));
 
+
+            ShoppingRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String quantity = getValueQuantity(tvQuantity);
+                    mItemListener.onRemovePurchaseClick(purchase.getId(),quantity);
+                }
+            });
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -435,8 +364,19 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
 
             return rowView;
         }
+
+
     }
 
+
+    public static String getValueQuantity(TextView tvQuantity){
+
+        if (tvQuantity.getText().toString() != null) {
+            return Integer.toString(Integer.parseInt(tvQuantity.getText().toString()) - 1);
+        }else {
+            return "0";
+        }
+    }
 
 
     public interface ShoppingItemListener {
@@ -446,6 +386,8 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         void onCompletePurchaseClick(Purchase completedPurchase);
 
         void onActivatePurchaseClick(Purchase activatedPurchase);
+
+        void onRemovePurchaseClick(String activatedPurchaseId, String quantity);
     }
 
 

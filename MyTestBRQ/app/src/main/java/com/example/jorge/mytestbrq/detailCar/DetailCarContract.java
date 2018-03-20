@@ -12,7 +12,7 @@ public interface DetailCarContract {
 
     interface View {
 
-        void setLoading(boolean isAtivo);
+        void setLoading(boolean isActive);
 
         void showDetailCar(DetailCar detailCarList);
 

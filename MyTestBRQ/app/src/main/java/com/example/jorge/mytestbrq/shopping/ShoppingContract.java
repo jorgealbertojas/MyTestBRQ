@@ -19,7 +19,6 @@ public interface ShoppingContract {
 
         void showShopping(List<Purchase> listPurchase);
 
-
         void showAddPurchase();
 
         void showPurchaseDetailsUi(String shoppingId);
@@ -51,17 +50,17 @@ public interface ShoppingContract {
 
     interface Presenter extends BasePresenter {
 
+        void removeItemShopping(@NonNull String removeShoppingId, String quantity);
+
         void result(int requestCode, int resultCode);
 
         void loadShopping(boolean forceUpdate);
 
-        void addNewPurchase();
+        void openPurchaseDetails(@NonNull Purchase requestedShopping);
 
-        void openPurchaseDetails(@NonNull Purchase requestedTask);
+        void completePurchase(@NonNull Purchase completedShopping);
 
-        void completePurchase(@NonNull Purchase completedTask);
-
-        void activatePurchase(@NonNull Purchase activeTask);
+        void activatePurchase(@NonNull Purchase activeShopping);
 
         void clearCompletedShopping();
 

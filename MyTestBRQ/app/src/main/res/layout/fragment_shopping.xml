@@ -14,81 +14,11 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:orientation="vertical">
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_shopping"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            card_view:cardCornerRadius="4dp"
-            card_view:cardElevation="5dp"
-            card_view:cardMaxElevation="5dp"
-            card_view:contentPadding="5dp"
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
-
-            <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <TextView
-
-                    android:id="@+id/tv_shopping_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:lines="5"
-                    android:padding="4dp"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toEndOf="@+id/rl_RelativeLayout"/>
-
-                <TextView
-
-                    android:id="@+id/tv_code"
-                    android:layout_width="246dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_shopping_name"
-                    android:maxLines="1"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rl_RelativeLayout" />
-
-                <RelativeLayout
-                    android:id="@+id/rl_RelativeLayout"
-                    android:layout_width="125dp"
-                    android:layout_height="125dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/im_shopping_image"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/ic_launcher"
-                        tools:layout_editor_absoluteX="181dp"
-                        tools:layout_editor_absoluteY="0dp" />
-
-                </RelativeLayout>
-
-
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
 
         <LinearLayout
             android:id="@+id/ll_shopping"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/cv_shopping"
             android:orientation="vertical">
 
 
