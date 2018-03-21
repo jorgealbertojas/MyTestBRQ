@@ -13,7 +13,6 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:layout_centerInParent="true"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
@@ -24,7 +23,7 @@
             android:background="@color/white"
             android:textSize="16sp"
             android:textColor="@color/black"
-            android:padding="16dp" />
+/>
 
         <Button
             android:id="@+id/b_add"
@@ -32,7 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_detail_description"
             android:text="Button" />
-
+        <Spinner
+            android:id="@+id/sp_quantity"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/b_add" />
 
     </RelativeLayout>
 

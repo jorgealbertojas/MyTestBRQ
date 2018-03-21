@@ -43,5 +43,12 @@ dependencies {
 
     compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 
+  //  compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
+
+    compile 'io.reactivex:rxandroid:1.2.1'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex:rxjava:1.1.6'
+
 
 }

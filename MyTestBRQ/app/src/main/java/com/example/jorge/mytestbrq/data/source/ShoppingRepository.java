@@ -135,10 +135,12 @@ public class ShoppingRepository implements ShoppingDataSource{
             activatePurchase(getPurchaseWithId(productId), quantity);
 
             Purchase purchase = getPurchaseWithId(productId);
+           // mShoppingLocalDataSource.activatePurchase1(purchase.getId(), quantity);
             mShoppingLocalDataSource.activatePurchase(purchase.getId(), quantity);
         }else{
             mShoppingLocalDataSource.deletePurchase(productId);
         }
+
     }
 
 
@@ -163,6 +165,8 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void refreshShopping() {
         mCacheIsDirty = true;
     }
+
+
 
     @Override
     public void deleteAllShopping() {
@@ -206,6 +210,11 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void completePurchase(@NonNull String shoppingID) {
         checkNotNull(shoppingID);
         completePurchase(shoppingID);
+    }
+
+    @Override
+    public void showMessageComplete() {
+        mShoppingLocalDataSource.showMessageComplete();
     }
 
     private void getShoppingFromRemoteDataSource(@NonNull final LoadShoppingCallback callback) {

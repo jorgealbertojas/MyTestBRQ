@@ -26,12 +26,7 @@ public interface ShoppingDataSource {
 
     }
 
-    interface FindShoppingCallback {
 
-        void onFindLoaded(List<Purchase> Purchase);
-
-        void onDataNotAvailable();
-    }
 
     interface GetPurchaseCallback {
 
@@ -59,6 +54,8 @@ public interface ShoppingDataSource {
     void completePurchase(@NonNull Purchase purchase, @NonNull String quantity);
 
     void completePurchase(@NonNull String productId);
+
+    void showMessageComplete();
 
 
 }

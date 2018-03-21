@@ -245,16 +245,7 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     @Override
                     public void onClick(View v) {
 
-                        int position = getAdapterPosition();
-                     //   Cars cars = getItem(position);
-                       // mItemListener.onProductClick(cars);
-
                         Intent intent = new Intent(v.getContext(), ShoppingActivity.class);
-
-                     //   Bundle bundle = new Bundle();
-                     //   bundle.putSerializable(EXTRA_PRODUCT, product );
-
-                      //  intent.putExtra(EXTRA_BUNDLE_PRODUCT, bundle);
                         v.getContext().startActivity(intent);
                     }
                 });

@@ -42,6 +42,7 @@ ext {
     guavaVersion = '18.0'
     roomVersion = "1.0.0"
     espressoVersion = '3.0.1'
+    rxJavaVersion = '1.2.9'
 
 
 }

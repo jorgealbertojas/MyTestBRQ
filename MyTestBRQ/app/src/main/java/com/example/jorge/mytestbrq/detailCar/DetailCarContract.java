@@ -16,12 +16,13 @@ public interface DetailCarContract {
 
         void showDetailCar(DetailCar detailCarList);
 
+        void addItemsQuantity(int quantity);
+
     }
 
     interface UserActionsListener {
 
         void savePurchase(String carId, String carName, String carDescription, String carBrand, String quantity, String price, String image, String id);
-
 
         void loadingDetailCar();
 

@@ -52,5 +52,6 @@ public class AppExecutors {
         public void execute(@NonNull Runnable command) {
             mainThreadHandler.post(command);
         }
+
     }
 }

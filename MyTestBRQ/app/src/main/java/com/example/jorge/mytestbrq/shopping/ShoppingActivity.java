@@ -3,8 +3,11 @@ package com.example.jorge.mytestbrq.shopping;
 
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+
 import com.example.jorge.mytestbrq.Injection;
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.util.ActivityUtils;

@@ -1,13 +1,24 @@
 package com.example.jorge.mytestbrq.data.source.local;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.ShoppingDataSource;
+import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 import com.example.jorge.mytestbrq.util.AppExecutors;
 
 import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -23,6 +34,9 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
     private ShoppingDao mShoppingDao;
 
     private AppExecutors mAppExecutors;
+
+
+
 
     // Prevent direct instantiation.
     private ShoppingLocalDataSource(@NonNull AppExecutors appExecutors,
@@ -64,6 +78,10 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                         }
                     }
                 });
+
+
+
+
             }
         };
 
@@ -118,16 +136,38 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                     String valueFinal = Integer.toString(contTotal);
 
                     mShoppingDao.updateQuantity(purchaseNew.getId(), valueFinal);
+
                 }
             }
         };
         mAppExecutors.diskIO().execute(saveRunnable);
+
+    }
+
+    @Override
+    public void activatePurchase(@NonNull final String shoppingId, @NonNull final String quantity) {
+        Runnable activateRunnable = new Runnable() {
+            @Override
+            public void run() {
+                String newQuantity = "1";
+                if (!quantity.equals("")){
+                    newQuantity  =   quantity;
+                }
+
+                getNames(shoppingId,newQuantity).subscribe(subscriber);
+
+
+            }
+        };
+        mAppExecutors.diskIO().execute(activateRunnable);
+
     }
 
 
 
+/*
     @Override
-    public void activatePurchase(@NonNull final String shoppingId,@NonNull final String quantity) {
+    public Runnable activatePurchase1(@NonNull final String shoppingId, @NonNull final String quantity) {
         Runnable activateRunnable = new Runnable() {
             @Override
             public void run() {
@@ -139,12 +179,52 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             }
         };
         mAppExecutors.diskIO().execute(activateRunnable);
-    }
+        return activateRunnable;
+    }*/
 
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String Quantity) {
 
     }
+
+/*    public void activatePurchasenew(@NonNull final String shoppingId, @NonNull final String quantity) {
+
+
+        int i = mShoppingDao.updateQuantity(shoppingId, quantity);
+    }*/
+
+    private int teste (@NonNull String shoppingId, @NonNull String quantity){
+        int i = mShoppingDao.updateQuantity(shoppingId, quantity);
+        subscriber.onNext(i);
+        subscriber.onCompleted();
+        return i;
+    }
+
+
+
+    public Observable<Integer> getNames(@NonNull String shoppingId, @NonNull String quantity){
+        return Observable.just(teste(shoppingId, quantity));
+    }
+
+    Subscriber<Integer> subscriber = new Subscriber<Integer>(){
+        @Override
+        public void onCompleted() {
+            Log.e("bebeto","completo");
+
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("bebeto","erro");
+        }
+
+        @Override
+        public void onNext(Integer names) {
+            Log.e("bebeto","onNext");
+            //showMessageComplete();
+        }
+    };
 
 
     @Override
@@ -196,6 +276,12 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
 
     @Override
     public void completePurchase(@NonNull String productId) {
+
+    }
+
+    @Override
+    public void showMessageComplete(){
+        INSTANCE.showMessageComplete();
 
     }
 

@@ -56,6 +56,13 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     }
 
+/*
+    @Override
+    public Runnable activatePurchase(@NonNull String productI, String Quantity) {
+
+    }
+*/
+
 
 
     @Override
@@ -69,6 +76,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
     public void refreshShopping() {
 
     }
+
 
     @Override
     public void deleteAllShopping() {
@@ -89,6 +97,11 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     @Override
     public void completePurchase(@NonNull String productId) {
+
+    }
+
+    @Override
+    public void showMessageComplete() {
 
     }
 

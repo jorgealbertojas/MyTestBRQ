@@ -42,6 +42,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     private TextView mNoShoppingMainView;
     private TextView mNoShoppingAddView;
     private static ListView mListView;
+    private ImageView mFinalize;
 
     public static ShoppingFragment newInstance() {
         return new ShoppingFragment();
@@ -103,6 +104,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         mListView.setAdapter(mListAdapter);
 
         mShoppingView = (LinearLayout) root.findViewById(R.id.ll_shopping);
+        mFinalize = (ImageView) getActivity().findViewById(R.id.iv_finalize);
 
         // Set up  no Shopping view
         mNoShoppingView = root.findViewById(R.id.noShopping);
@@ -116,6 +118,13 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             }
         });
 
+
+        mFinalize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         // Set up progress indicator
         final ScrollChildSwipeRefreshLayout swipeRefreshLayout =

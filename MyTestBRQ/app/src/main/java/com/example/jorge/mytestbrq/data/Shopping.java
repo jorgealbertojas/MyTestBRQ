@@ -1,5 +1,6 @@
 package com.example.jorge.mytestbrq.data;
 
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
@@ -16,8 +17,8 @@ import java.util.UUID;
  * Immutable model class for a Purchase.
  */
 
-@Entity(tableName = "Purchase")
-public final class Purchase {
+@Entity(tableName = "Shopping")
+public final class Shopping {
 
     @PrimaryKey
     @NonNull
@@ -57,11 +58,11 @@ public final class Purchase {
     private final String mImage;
 
     @Ignore
-    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image) {
+    public Shopping(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image) {
         this(carId, carName,carDescription,carBrand, quantity,price, image, UUID.randomUUID().toString());
     }
 
-    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image ,
+    public Shopping(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image ,
                     @NonNull String id) {
         mId = id;
         mCarId = carId;
