@@ -66,7 +66,7 @@ public class DetailCarPresenter implements DetailCarContract.UserActionsListener
     }
 
     private void createPurchase(String carId, String carName, String carDescription, String carBrand, String quantity, String price, String image) {
-        Purchase newPurchase  = new Purchase(carId, carName, carDescription, carBrand, quantity, price, image);
+        Purchase newPurchase  = new Purchase(carId, carName, carDescription, carBrand, quantity, price, image, null);
 
         mShoppingRepository.savePurchase(newPurchase);
 

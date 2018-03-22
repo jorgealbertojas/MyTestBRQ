@@ -57,6 +57,8 @@ public interface ShoppingDataSource {
 
     void showMessageEventLog(String message);
 
+    void finalizeShopping(String date);
+
 
 
 }

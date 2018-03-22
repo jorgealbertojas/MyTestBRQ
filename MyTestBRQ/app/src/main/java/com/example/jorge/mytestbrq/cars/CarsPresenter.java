@@ -1,9 +1,11 @@
 package com.example.jorge.mytestbrq.cars;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.example.jorge.mytestbrq.data.source.cloud.cars.CarsServiceApi;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
+import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 
 import java.util.List;
 
@@ -20,6 +22,14 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
     public CarsPresenter(CarsServiceApi mCarsServiceApi,CarsContract.View mCarsContract_View) {
         this.mCarsContractView = mCarsContract_View;
         this.mCarsServiceApi = mCarsServiceApi;
+    }
+
+    @Override
+    public void result(int requestCode, int resultCode) {
+        // If a task was successfully added, show snackbar
+        if (ShoppingActivity.REQUEST_FINALIZE_SHOPPING == requestCode && Activity.RESULT_OK == resultCode) {
+            mCarsContractView.showSuccessfullySavedMessage();
+        }
     }
 
     /**
@@ -41,5 +51,10 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
     @Override
     public void openDetail(@NonNull Cars cars) {
 
+    }
+
+    @Override
+    public void start() {
+       // loadShopping(false);
     }
 }

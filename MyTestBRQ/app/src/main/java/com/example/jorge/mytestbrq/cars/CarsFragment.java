@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,6 +36,8 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 19/03/2018.
@@ -79,8 +82,13 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     public void onResume() {
         super.onResume();
         mActionsListener.loadingCars();
+        mActionsListener.start();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mActionsListener.result(requestCode, resultCode);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -182,10 +190,15 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
     }
 
+    @Override
+    public void setPresenter(CarsContract.UserActionsListener presenter) {
+        mActionsListener = checkNotNull(presenter);
+    }
+
     /**
      * Adapter for fill the list of the car
      */
-    private static class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
+    private class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
         private List<Cars> mCars;
         private ItemListener mItemListener;
@@ -256,6 +269,8 @@ public class CarsFragment extends Fragment implements CarsContract.View {
             notifyDataSetChanged();
         }
 
+
+
         private void setList(List<Cars> notes) {
             mCars = notes;
         }
@@ -289,8 +304,7 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(v.getContext(), ShoppingActivity.class);
-                        v.getContext().startActivity(intent);
+                        showShopping();
                     }
                 });
 
@@ -313,9 +327,24 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         }
     }
 
+    @Override
+    public void showShopping() {
+        Intent intent = new Intent(getContext(), ShoppingActivity.class);
+        startActivityForResult(intent, ShoppingActivity.REQUEST_FINALIZE_SHOPPING);
+    }
+
     public interface ItemListener {
 
         void onCarsClick(Cars clickedNote);
+    }
+
+    @Override
+    public void showSuccessfullySavedMessage() {
+        showMessage(getString(R.string.successfully_saved_task_message));
+    }
+
+    private void showMessage(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 }
 

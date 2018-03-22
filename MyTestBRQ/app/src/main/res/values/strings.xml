@@ -8,5 +8,7 @@
     <string name="msg_success_return_delete">Success delete in this operation</string>
     <string name="msg_success_return_insert">Success insert in this operation</string>
 
+    <string name="successfully_saved_task_message">Finalizado a compra com sucesso!</string>
+
 
 </resources>

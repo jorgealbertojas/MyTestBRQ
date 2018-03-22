@@ -218,6 +218,18 @@ public class ShoppingRepository implements ShoppingDataSource{
 
     }
 
+    @Override
+    public void finalizeShopping(String date) {
+        mShoppingRemoteDataSource.finalizeShopping(date);
+        mShoppingLocalDataSource.finalizeShopping(date);
+
+        if (mCachedShopping == null) {
+            mCachedShopping = new LinkedHashMap<>();
+        }
+        mCachedShopping.clear();
+
+    }
+
 
     private void getShoppingFromRemoteDataSource(@NonNull final LoadShoppingCallback callback) {
         mShoppingRemoteDataSource.getShopping(new LoadShoppingCallback() {

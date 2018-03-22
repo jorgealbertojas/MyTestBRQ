@@ -45,18 +45,13 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
         start();
     }
 
-    @Override
-    public void result(int requestCode, int resultCode) {
-        // If a task was successfully added, show snackBar
-        if (CarsActivity.REQUEST_ADD_PURCHASE == requestCode && Activity.RESULT_OK == resultCode) {
-            mShoppingView.showSuccessfullySavedMessage();
-        }
-    }
+
 
 
     @Override
     public void loadShopping(boolean forceUpdate) {
         // Simplification for sample: a network reload will be forced on first load.
+
         loadShopping(forceUpdate || mFirstLoad, true);
         mFirstLoad = false;
     }
@@ -140,7 +135,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     }
 
 
-
     @Override
     public void activatePurchase(@NonNull Purchase activePurchase ) {
         checkNotNull(activePurchase, "activeTask cannot be null!");
@@ -149,6 +143,12 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
         mShoppingRepository.activatePurchase(activePurchase.getId(), activePurchase.getQuantity());
         mShoppingView.showPurchaseMarkedActive();
         loadShopping(false, false);
+    }
+
+    @Override
+    public void finalizeShopping(@NonNull String date) {
+        mShoppingRepository.finalizeShopping(date);
+        mShoppingView.showCarsList();
     }
 
     @Override
@@ -177,6 +177,8 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
         mShoppingView.showNoShopping();
 
     }
+
+
 
 
 

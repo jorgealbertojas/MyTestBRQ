@@ -1,29 +1,22 @@
 package com.example.jorge.mytestbrq.data.source.local;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.ShoppingDataSource;
-import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 import com.example.jorge.mytestbrq.util.AppExecutors;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_COMPLETE;
 import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_ERROR;
@@ -244,6 +237,23 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             );
    }
 
+    @Override
+    public void finalizeShopping(final String date) {
+        Runnable deleteRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mShoppingDao.updateFinalizeShopping(date);
+                observeFinalizeShopping(date).subscribe(subscriberFinalize);
+            }
+        };
+
+        mAppExecutors.diskIO().execute(deleteRunnable);
+    }
+
+    public Observable<Integer> observeFinalizeShopping(@NonNull String date){
+        return Observable.just(callObserveFinalizeShopping(date));
+    }
+
     public Observable<Integer> observeUpdateQuantity(@NonNull String shoppingId, @NonNull String quantity){
         return Observable.just(callObserveUpdateQuantity(shoppingId, quantity));
     }
@@ -254,6 +264,13 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
 
     public Observable<Integer> observeDeletePurchase(@NonNull String shoppingId){
         return Observable.just(callObserveDeletePurchase(shoppingId));
+    }
+
+    private int callObserveFinalizeShopping(@NonNull String date){
+        int i = mShoppingDao.updateFinalizeShopping(date);
+        subscriberUpdate.onNext(i);
+        subscriberUpdate.onCompleted();
+        return i;
     }
 
     private int callObserveUpdateQuantity(@NonNull String shoppingId, @NonNull String quantity){
@@ -338,6 +355,27 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             Log.e(TAG_NORMAL,mContext.getResources().getString(R.string.msg_next_return));
             if (names == 0){
                 showMessageEventLog(mContext.getResources().getString(R.string.msg_success_return_delete));
+            }
+        }
+    };
+
+    Subscriber<Integer> subscriberFinalize = new Subscriber<Integer>(){
+        @Override
+        public void onCompleted() {
+            Log.e(TAG_COMPLETE, mContext.getResources().getString(R.string.msg_success_return_update));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG_ERROR, mContext.getResources().getString(R.string.msg_error_return));
+            showMessageEventLog(mContext.getResources().getString(R.string.msg_error_return));
+        }
+
+        @Override
+        public void onNext(Integer names) {
+            Log.e(TAG_NORMAL,mContext.getResources().getString(R.string.msg_next_return));
+            if (names > 0){
+                showMessageEventLog(mContext.getResources().getString(R.string.msg_success_return_update));
             }
         }
     };

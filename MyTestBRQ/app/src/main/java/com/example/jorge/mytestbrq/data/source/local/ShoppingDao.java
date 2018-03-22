@@ -21,25 +21,25 @@ public interface ShoppingDao {
     /**
      * Select all Purchase from the Purchase table.
      */
-    @Query("SELECT * FROM Purchase")
+    @Query("SELECT * FROM Purchase where date isnull")
     List<Purchase> getShopping();
 
     /**
      * Select a Purchase by id.
      */
-    @Query("SELECT * FROM Purchase WHERE entryid = :shoppingId ")
+    @Query("SELECT * FROM Purchase WHERE entryid = :shoppingId and date isnull ")
     Purchase getPurchaseById(String shoppingId);
 
     /**
      * Delete a Purchase by id.
      */
-    @Query("DELETE FROM Purchase WHERE entryid = :shoppingId")
+    @Query("DELETE FROM Purchase WHERE entryid = :shoppingId and date isnull")
     int deletePurchaseById(String shoppingId);
 
     /**
      * Update the complete status of a Purchase
      */
-    @Query("UPDATE Purchase SET quantity = :quantity WHERE cartid = :cartId ")
+    @Query("UPDATE Purchase SET quantity = :quantity WHERE cartid = :cartId and date isnull")
     int updateQuantity(String cartId, String quantity);
 
     /**
@@ -51,12 +51,20 @@ public interface ShoppingDao {
     /**
      * Delete all Purchase.
      */
-    @Query("DELETE FROM Purchase")
+    @Query("DELETE FROM Purchase where date isnull")
     void deleteShopping();
 
     /**
      * Select a Purchase by id.
      */
-    @Query("SELECT * FROM Purchase WHERE cartid = :carId ")
+    @Query("SELECT * FROM Purchase WHERE cartid = :carId and date isnull")
     Purchase getPurchaseByCarId(String carId);
+
+
+    /**
+     * Update for finalize of the shopping
+     */
+    @Query("UPDATE Purchase SET date = :date WHERE date isnull")
+    int updateFinalizeShopping(String date);
+
 }

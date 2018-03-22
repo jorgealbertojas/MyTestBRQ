@@ -50,18 +50,21 @@ public final class Purchase {
     @ColumnInfo(name = "price")
     private final String mPrice;
 
-
-
     @Nullable
     @ColumnInfo(name = "image")
     private final String mImage;
 
+
+    @Nullable
+    @ColumnInfo(name = "date")
+    private final String mDate;
+
     @Ignore
-    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image) {
-        this(carId, carName,carDescription,carBrand, quantity,price, image, UUID.randomUUID().toString());
+    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image, @Nullable String date) {
+        this(carId, carName,carDescription,carBrand, quantity,price, image, date, UUID.randomUUID().toString());
     }
 
-    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image ,
+    public Purchase(@Nullable String carId, @Nullable String carName, @Nullable String carDescription, @Nullable String carBrand, @Nullable String quantity, @Nullable String price, @Nullable String image , @Nullable String date,
                     @NonNull String id) {
         mId = id;
         mCarId = carId;
@@ -71,6 +74,7 @@ public final class Purchase {
         mQuantity = quantity;
         mPrice = price;
         mImage = image;
+        mDate = date;
     }
 
 
@@ -113,6 +117,11 @@ public final class Purchase {
     @Nullable
     public String getImage() {
         return mImage;
+    }
+
+    @Nullable
+    public String getDate() {
+        return mDate;
     }
 
 

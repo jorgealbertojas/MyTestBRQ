@@ -1,5 +1,6 @@
 package com.example.jorge.mytestbrq.shopping;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.example.jorge.mytestbrq.BasePresenter;
@@ -21,6 +22,8 @@ public interface ShoppingContract {
 
         void showAddPurchase();
 
+        void showCarsList();
+
         void showPurchaseDetailsUi(String shoppingId);
 
         void showPurchaseMarkedComplete();
@@ -33,12 +36,9 @@ public interface ShoppingContract {
 
         void showNoShopping();
 
-
         void showNoActiveShopping();
 
         void showNoCompletedShopping();
-
-        void showSuccessfullySavedMessage();
 
         boolean isActive();
 
@@ -52,8 +52,6 @@ public interface ShoppingContract {
 
         void removeItemShopping(@NonNull String removeShoppingId, String quantity);
 
-        void result(int requestCode, int resultCode);
-
         void loadShopping(boolean forceUpdate);
 
         void openPurchaseDetails(@NonNull Purchase requestedShopping);
@@ -61,6 +59,8 @@ public interface ShoppingContract {
         void completePurchase(@NonNull Purchase completedShopping);
 
         void activatePurchase(@NonNull Purchase activeShopping);
+
+        void finalizeShopping(@NonNull String date);
 
         void clearCompletedShopping();
 

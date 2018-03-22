@@ -1,5 +1,7 @@
 package com.example.jorge.mytestbrq.shopping;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,6 +26,8 @@ import com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -33,6 +39,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ShoppingFragment  extends Fragment implements ShoppingContract.View {
 
     private ShoppingContract.Presenter mPresenter;
+
+    private static final int REQUEST_FINALIZE_SHOPPING = 1;
 
     private ShoppingAdapter mListAdapter;
 
@@ -78,13 +86,14 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         public void onRemovePurchaseClick(String activatedPurchase, String quantity) {
             mPresenter.removeItemShopping(activatedPurchase, quantity);
         }
+
+        @Override
+        public void onFinalizeShoppingClick(String date) {
+            mPresenter.finalizeShopping(date);
+        }
     };
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mPresenter.result(requestCode, resultCode);
-    }
 
     @Override
     public void onResume() {
@@ -119,9 +128,21 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         });
 
 
+
         mFinalize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Time today = new Time();
+                String month = Integer.toString(today.month) ;
+                String year = Integer.toString(today.year);
+                String day = Integer.toString(today.monthDay);
+
+                String hour = Integer.toString(today.month) ;
+                String minute = Integer.toString(today.year);
+                String second = Integer.toString(today.monthDay);
+
+                mItemListener.onFinalizeShoppingClick(day + "/" + month + "/" + year + "  " + hour + ":" + minute +" "+ second);
 
             }
         });
@@ -241,6 +262,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         );
     }
 
+
     @Override
     public void showNoActiveShopping() {
         showNoShoppingViews(
@@ -259,10 +281,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         );
     }
 
-    @Override
-    public void showSuccessfullySavedMessage() {
-        showMessage("successfully_saved_purchase_message");
-    }
 
     @Override
     public boolean isActive() {
@@ -388,6 +406,11 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         }
     }
 
+    @Override
+    public void showCarsList() {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
+    }
 
     public interface ShoppingItemListener {
 
@@ -398,6 +421,8 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         void onActivatePurchaseClick(Purchase activatedPurchase);
 
         void onRemovePurchaseClick(String activatedPurchaseId, String quantity);
+
+        void onFinalizeShoppingClick(String date);
     }
 
 

@@ -9,9 +9,6 @@
     </style>
 
     <style name="Toolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="ToolbarWithBar" parent="Theme.AppCompat" >
-        <item name="windowActionBar">false</item>
-    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

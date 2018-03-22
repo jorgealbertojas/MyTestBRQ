@@ -15,6 +15,7 @@ import com.example.jorge.mytestbrq.util.EspressoIdlingResource;
 
 public class ShoppingActivity extends AppCompatActivity {
 
+    public static final int REQUEST_FINALIZE_SHOPPING = 1;
 
     private ShoppingPresenter mShoppingPresenter;
 
@@ -64,7 +65,11 @@ public class ShoppingActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 
 
