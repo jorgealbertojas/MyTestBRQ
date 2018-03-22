@@ -45,7 +45,7 @@ public interface ShoppingDataSource {
 
     void activatePurchase(@NonNull Purchase purchase, String Quantity);
 
-    void refreshShopping();
+    void refreshShopping(List<Purchase> purchaseList);
 
     void deleteAllShopping();
 
@@ -55,7 +55,8 @@ public interface ShoppingDataSource {
 
     void completePurchase(@NonNull String productId);
 
-    void showMessageComplete();
+    void showMessageEventLog(String message);
+
 
 
 }

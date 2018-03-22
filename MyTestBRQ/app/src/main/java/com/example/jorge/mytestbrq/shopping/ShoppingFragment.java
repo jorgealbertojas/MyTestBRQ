@@ -221,6 +221,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     @Override
     public void showCompletedShoppingCleared() {
         showMessage("completed_purchase_cleared");
+
     }
 
     @Override
@@ -229,7 +230,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     }
 
     private void showMessage(String message) {
-        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+
     }
 
     @Override

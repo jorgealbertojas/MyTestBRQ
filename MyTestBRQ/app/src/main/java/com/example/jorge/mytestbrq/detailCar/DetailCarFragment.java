@@ -99,7 +99,8 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
 
         Picasso.with(mCarDescription.getContext())
                 .load(detailCar.getImagem())
-                .fit().centerCrop()
+                .resize(6000,2000)
+                .onlyScaleDown()
                 .placeholder(R.mipmap.ic_launcher)
                 .into(mCarImage);
     }

@@ -39,18 +39,24 @@ public interface ShoppingDao {
     /**
      * Update the complete status of a Purchase
      */
-    @Query("UPDATE Purchase SET quantity = :quantity WHERE entryid = :shoppingId ")
-    int updateQuantity(String shoppingId, String quantity);
+    @Query("UPDATE Purchase SET quantity = :quantity WHERE cartid = :cartId ")
+    int updateQuantity(String cartId, String quantity);
 
     /**
      * Insert a Purchase in the database. If the Purchase already exists, replace it.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPurchase(Purchase purchase);
+    Long insertPurchase(Purchase purchase);
 
     /**
      * Delete all Purchase.
      */
     @Query("DELETE FROM Purchase")
     void deleteShopping();
+
+    /**
+     * Select a Purchase by id.
+     */
+    @Query("SELECT * FROM Purchase WHERE cartid = :carId ")
+    Purchase getPurchaseByCarId(String carId);
 }

@@ -1,12 +1,17 @@
 package com.example.jorge.mytestbrq.data.source.local;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.ShoppingDataSource;
 import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
@@ -20,6 +25,9 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_COMPLETE;
+import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_ERROR;
+import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_NORMAL;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -35,22 +43,25 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
 
     private AppExecutors mAppExecutors;
 
+    private Context mContext;
+
 
 
 
     // Prevent direct instantiation.
     private ShoppingLocalDataSource(@NonNull AppExecutors appExecutors,
-                                    @NonNull ShoppingDao shoppingDao) {
+                                    @NonNull ShoppingDao shoppingDao, Context context) {
         mAppExecutors = appExecutors;
         mShoppingDao = shoppingDao;
+        mContext = context;
     }
 
     public static ShoppingLocalDataSource getInstance(@NonNull AppExecutors appExecutors,
-                                                      @NonNull ShoppingDao shoppingDao) {
+                                                      @NonNull ShoppingDao shoppingDao, Context context) {
         if (INSTANCE == null) {
             synchronized (ShoppingLocalDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ShoppingLocalDataSource(appExecutors, shoppingDao);
+                    INSTANCE = new ShoppingLocalDataSource(appExecutors, shoppingDao, context);
                 }
             }
         }
@@ -115,15 +126,18 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
     }
 
 
+
+
+
     @Override
     public void savePurchase(@NonNull final Purchase purchase) {
         checkNotNull(purchase);
         Runnable saveRunnable = new Runnable() {
             @Override
             public void run() {
-                Purchase purchaseNew = mShoppingDao.getPurchaseById(purchase.getCarId());
+                Purchase purchaseNew = mShoppingDao.getPurchaseByCarId(purchase.getCarId());
                 if (purchaseNew == null) {
-                    mShoppingDao.insertPurchase(purchase);
+                    observeInsertPurchase(purchase).subscribe(subscriberInsert);
                 }else{
                     String quantity1 = purchase.getQuantity();
                     String quantity2 = purchaseNew.getQuantity();
@@ -135,7 +149,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                     Integer contTotal = Integer.parseInt(quantity1) + Integer.parseInt(quantity2);
                     String valueFinal = Integer.toString(contTotal);
 
-                    mShoppingDao.updateQuantity(purchaseNew.getId(), valueFinal);
+                    observeUpdateQuantity(purchaseNew.getCarId(),valueFinal).subscribe(subscriberUpdate);
 
                 }
             }
@@ -153,82 +167,20 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                 if (!quantity.equals("")){
                     newQuantity  =   quantity;
                 }
-
-                getNames(shoppingId,newQuantity).subscribe(subscriber);
-
-
+                observeUpdateQuantity(shoppingId,newQuantity).subscribe(subscriberUpdate);
             }
         };
         mAppExecutors.diskIO().execute(activateRunnable);
 
     }
-
-
-
-/*
-    @Override
-    public Runnable activatePurchase1(@NonNull final String shoppingId, @NonNull final String quantity) {
-        Runnable activateRunnable = new Runnable() {
-            @Override
-            public void run() {
-                String newQuantity = "1";
-                if (!quantity.equals("")){
-                    newQuantity  =   quantity;
-                }
-                mShoppingDao.updateQuantity(shoppingId, newQuantity);
-            }
-        };
-        mAppExecutors.diskIO().execute(activateRunnable);
-        return activateRunnable;
-    }*/
 
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String Quantity) {
 
     }
 
-/*    public void activatePurchasenew(@NonNull final String shoppingId, @NonNull final String quantity) {
-
-
-        int i = mShoppingDao.updateQuantity(shoppingId, quantity);
-    }*/
-
-    private int teste (@NonNull String shoppingId, @NonNull String quantity){
-        int i = mShoppingDao.updateQuantity(shoppingId, quantity);
-        subscriber.onNext(i);
-        subscriber.onCompleted();
-        return i;
-    }
-
-
-
-    public Observable<Integer> getNames(@NonNull String shoppingId, @NonNull String quantity){
-        return Observable.just(teste(shoppingId, quantity));
-    }
-
-    Subscriber<Integer> subscriber = new Subscriber<Integer>(){
-        @Override
-        public void onCompleted() {
-            Log.e("bebeto","completo");
-
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Log.e("bebeto","erro");
-        }
-
-        @Override
-        public void onNext(Integer names) {
-            Log.e("bebeto","onNext");
-            //showMessageComplete();
-        }
-    };
-
-
     @Override
-    public void refreshShopping() {
+    public void refreshShopping(List<Purchase> purchaseList) {
         // Not required because the {@link ShoppingRepository} handles the logic of refreshing the
         // Purchase from all the available data sources.
 
@@ -240,9 +192,9 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             @Override
             public void run() {
                 mShoppingDao.deleteShopping();
+
             }
         };
-
         mAppExecutors.diskIO().execute(deleteRunnable);
     }
 
@@ -252,6 +204,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             @Override
             public void run() {
                 mShoppingDao.deletePurchaseById(shoppingId);
+                observeDeletePurchase(shoppingId).subscribe(subscriberDelete);
             }
         };
 
@@ -271,19 +224,124 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
         mAppExecutors.diskIO().execute(completeRunnable);
     }
 
-
-
-
     @Override
     public void completePurchase(@NonNull String productId) {
 
     }
 
     @Override
-    public void showMessageComplete(){
-        INSTANCE.showMessageComplete();
+    public void showMessageEventLog(final String message){
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(
+                    new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+   }
 
+    public Observable<Integer> observeUpdateQuantity(@NonNull String shoppingId, @NonNull String quantity){
+        return Observable.just(callObserveUpdateQuantity(shoppingId, quantity));
     }
+
+    public Observable<Long> observeInsertPurchase(@NonNull Purchase purchase){
+        return Observable.just(callObserveInsertPurchase(purchase));
+    }
+
+    public Observable<Integer> observeDeletePurchase(@NonNull String shoppingId){
+        return Observable.just(callObserveDeletePurchase(shoppingId));
+    }
+
+    private int callObserveUpdateQuantity(@NonNull String shoppingId, @NonNull String quantity){
+        int i = mShoppingDao.updateQuantity(shoppingId, quantity);
+        subscriberUpdate.onNext(i);
+        subscriberUpdate.onCompleted();
+        return i;
+    }
+
+    private long callObserveInsertPurchase(@NonNull Purchase purchase){
+        long statusCommit = mShoppingDao.insertPurchase(purchase);
+        subscriberInsert.onNext(statusCommit);
+        subscriberInsert.onCompleted();
+        return statusCommit;
+    }
+
+    private int callObserveDeletePurchase(@NonNull String shoppingId){
+        int statusCommit = mShoppingDao.deletePurchaseById(shoppingId);
+        subscriberDelete.onNext(statusCommit);
+        subscriberDelete.onCompleted();
+        return statusCommit;
+    }
+
+    Subscriber<Integer> subscriberUpdate = new Subscriber<Integer>(){
+        @Override
+        public void onCompleted() {
+            Log.e(TAG_COMPLETE, mContext.getResources().getString(R.string.msg_success_return_update));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG_ERROR, mContext.getResources().getString(R.string.msg_error_return));
+            showMessageEventLog(mContext.getResources().getString(R.string.msg_error_return));
+        }
+
+        @Override
+        public void onNext(Integer names) {
+            Log.e(TAG_NORMAL,mContext.getResources().getString(R.string.msg_next_return));
+            if (names > 0){
+                showMessageEventLog(mContext.getResources().getString(R.string.msg_success_return_update));
+            }
+        }
+    };
+
+    Subscriber<Long> subscriberInsert = new Subscriber<Long>(){
+        @Override
+        public void onCompleted() {
+            Log.e(TAG_COMPLETE, mContext.getResources().getString(R.string.msg_success_return_insert));
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG_ERROR, mContext.getResources().getString(R.string.msg_error_return));
+            showMessageEventLog(mContext.getResources().getString(R.string.msg_error_return));
+        }
+
+        @Override
+        public void onNext(Long names) {
+            Log.e(TAG_NORMAL,mContext.getResources().getString(R.string.msg_next_return));
+            if (names > 0){
+                showMessageEventLog(mContext.getResources().getString(R.string.msg_success_return_insert));
+            }
+        }
+    };
+
+    Subscriber<Integer> subscriberDelete = new Subscriber<Integer>(){
+        @Override
+        public void onCompleted() {
+            Log.e(TAG_COMPLETE, mContext.getResources().getString(R.string.msg_success_return_delete));
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG_ERROR, mContext.getResources().getString(R.string.msg_error_return));
+            showMessageEventLog(mContext.getResources().getString(R.string.msg_error_return));
+        }
+
+        @Override
+        public void onNext(Integer names) {
+            Log.e(TAG_NORMAL,mContext.getResources().getString(R.string.msg_next_return));
+            if (names == 0){
+                showMessageEventLog(mContext.getResources().getString(R.string.msg_success_return_delete));
+            }
+        }
+    };
+
 
 
     @VisibleForTesting

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.util.Common;
 
+
 // Activity for list Cars
 public class CarsActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class CarsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cars);
+
+
 
         if (null == savedInstanceState) {
             if (Common.isOnline(this)) {

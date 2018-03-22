@@ -135,8 +135,8 @@ public class ShoppingRepository implements ShoppingDataSource{
             activatePurchase(getPurchaseWithId(productId), quantity);
 
             Purchase purchase = getPurchaseWithId(productId);
-           // mShoppingLocalDataSource.activatePurchase1(purchase.getId(), quantity);
-            mShoppingLocalDataSource.activatePurchase(purchase.getId(), quantity);
+
+            mShoppingLocalDataSource.activatePurchase(purchase.getCarId(), quantity);
         }else{
             mShoppingLocalDataSource.deletePurchase(productId);
         }
@@ -162,7 +162,8 @@ public class ShoppingRepository implements ShoppingDataSource{
 
 
     @Override
-    public void refreshShopping() {
+    public void refreshShopping(List<Purchase> purchaseList) {
+        refreshCache(purchaseList);
         mCacheIsDirty = true;
     }
 
@@ -213,9 +214,10 @@ public class ShoppingRepository implements ShoppingDataSource{
     }
 
     @Override
-    public void showMessageComplete() {
-        mShoppingLocalDataSource.showMessageComplete();
+    public void showMessageEventLog(String message) {
+
     }
+
 
     private void getShoppingFromRemoteDataSource(@NonNull final LoadShoppingCallback callback) {
         mShoppingRemoteDataSource.getShopping(new LoadShoppingCallback() {
@@ -239,17 +241,7 @@ public class ShoppingRepository implements ShoppingDataSource{
 
 
 
-    private void refreshCacheFind(List<Purchase> purchaseList) {
-        if (mCachedShopping == null) {
-            mCachedShopping = new LinkedHashMap<>();
-        }
 
-        mCachedShopping.clear();
-        for (Purchase purchase : purchaseList) {
-            mCachedShopping.put(purchase.getId(), purchase);
-        }
-        mCacheIsDirty = false;
-    }
 
     private void refreshCache(List<Purchase> purchaseList) {
         if (mCachedShopping == null) {

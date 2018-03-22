@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".purchaseDetail.PurchaseDetailActivity">
+
         <ImageView
             android:id="@+id/iv_shopping"
             android:layout_width="40dp"

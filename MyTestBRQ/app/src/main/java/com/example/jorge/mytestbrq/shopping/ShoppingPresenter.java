@@ -42,6 +42,7 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     @Override
     public void removeItemShopping(@NonNull String removeShoppingId, String quantity) {
         mShoppingRepository.activatePurchase(removeShoppingId , quantity);
+        start();
     }
 
     @Override
@@ -168,6 +169,7 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     }
 
     private void showFilterLabel() {
+
     }
 
     private void processEmptyTasks() {

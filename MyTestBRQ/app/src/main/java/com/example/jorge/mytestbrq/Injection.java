@@ -21,6 +21,6 @@ public class Injection {
 
         return ShoppingRepository.getInstance(FakeShoppingRemoteDataSource.getInstance(),
                 ShoppingLocalDataSource.getInstance(new AppExecutors(),
-                        database.ShoppingDao()));
+                        database.ShoppingDao(),context));
     }
 }

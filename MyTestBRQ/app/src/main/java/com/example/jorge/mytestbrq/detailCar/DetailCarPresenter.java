@@ -43,11 +43,7 @@ public class DetailCarPresenter implements DetailCarContract.UserActionsListener
 
     @Override
     public void savePurchase(String carId, String carName, String carDescription, String carBrand, String quantity, String price, String image, String id) {
-      //  if (isNewPurchase()) {
-            createPurchase(carId, carName, carDescription, carBrand, quantity, price, image);
-      //  } else {
-     //       updatePurchase(productId, user,quantity,name, image);
-      //  }
+        createPurchase(carId, carName, carDescription, carBrand, quantity, price, image);
     }
 
     @Override
@@ -71,12 +67,9 @@ public class DetailCarPresenter implements DetailCarContract.UserActionsListener
 
     private void createPurchase(String carId, String carName, String carDescription, String carBrand, String quantity, String price, String image) {
         Purchase newPurchase  = new Purchase(carId, carName, carDescription, carBrand, quantity, price, image);
-        if (newPurchase.isEmpty()) {
-            //mAddPurchaseView.showEmptyPurchaseError();
-        } else {
-            mShoppingRepository.savePurchase(newPurchase);
-          //  mDetailCarContractView.showDetailCar();
-        }
+
+        mShoppingRepository.savePurchase(newPurchase);
+
     }
 
 }

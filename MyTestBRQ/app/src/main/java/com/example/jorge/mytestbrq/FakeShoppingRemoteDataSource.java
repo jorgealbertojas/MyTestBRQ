@@ -8,6 +8,7 @@ import com.example.jorge.mytestbrq.data.source.ShoppingDataSource;
 import com.google.common.collect.Lists;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,15 +57,6 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     }
 
-/*
-    @Override
-    public Runnable activatePurchase(@NonNull String productI, String Quantity) {
-
-    }
-*/
-
-
-
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String quantity) {
         Purchase activePurchase = new Purchase(purchase.getCarId(), purchase.getCarName(),purchase.getCarDescription(),purchase.getCarBrand(),quantity,purchase.getPrice(),purchase.getImage(), purchase.getId());
@@ -73,7 +65,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
 
     @Override
-    public void refreshShopping() {
+    public void refreshShopping(List<Purchase> purchaseList) {
 
     }
 
@@ -101,9 +93,10 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
     }
 
     @Override
-    public void showMessageComplete() {
+    public void showMessageEventLog(String message) {
 
     }
+
 
     @VisibleForTesting
     public void addShopping(Purchase... purchases) {
