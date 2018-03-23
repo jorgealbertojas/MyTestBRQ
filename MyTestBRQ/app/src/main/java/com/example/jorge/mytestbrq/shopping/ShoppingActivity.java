@@ -19,6 +19,8 @@ public class ShoppingActivity extends AppCompatActivity {
 
     public static final int REQUEST_EMPTY_SHOPPING = 10;
 
+    public static final int REQUEST_EMPTY_DETAIL = 20;
+
     private ShoppingPresenter mShoppingPresenter;
 
 

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Web Car</string>
+    <string name="app_name">Mobile Car</string>
+    <string name="shopping_car">Comprar Carro</string>
+    <string name="shopping_detail">Detalhe Carro</string>
 
     <string name="msg_error_return">Erro nesta operação.</string>
     <string name="msg_next_return">Próxima operação.</string>
@@ -12,6 +14,7 @@
     <string name="conformation">Deseja finalizar compras?</string>
 
     <string name="shopping_empty">Cesta vazia!</string>
+    <string name="detail_empty">Não há dados para esse carro!</string>
     <string name="shopping_value_max">Só pode fazer compras até R$ 100.000,00</string>
 
     <string name="detail">Mais detalhes</string>

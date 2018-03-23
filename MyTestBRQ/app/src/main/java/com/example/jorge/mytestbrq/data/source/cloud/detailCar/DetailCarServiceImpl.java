@@ -3,6 +3,8 @@ package com.example.jorge.mytestbrq.data.source.cloud.detailCar;
 
 import com.example.jorge.mytestbrq.data.source.cloud.detailCar.model.DetailCar;
 
+import java.util.concurrent.Callable;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +39,16 @@ public class DetailCarServiceImpl implements DetailCarServiceApi {
                 if(response.code()==200){
                     DetailCar resultSearch = response.body();
                     callback.onLoaded(resultSearch);
+                }else{
+                    DetailCar detailCarErroData = new DetailCar();
+                    detailCarErroData.setId(0);
+                    detailCarErroData.setQuantidade(0);
+                    detailCarErroData.setDescricao("0");
+                    detailCarErroData.setImagem("0");
+                    detailCarErroData.setMarca("0");
+                    detailCarErroData.setNome("0");
+                    detailCarErroData.setPreco(0);
+                    callback.onLoaded(detailCarErroData);
                 }
             }
 

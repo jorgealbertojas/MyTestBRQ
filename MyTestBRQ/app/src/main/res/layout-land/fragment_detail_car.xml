@@ -9,44 +9,47 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/im_detail_car_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+
             android:scaleType="centerCrop"
-            app:srcCompat="@android:color/darker_gray"
-            app:layout_constraintDimensionRatio="H,16:9"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/tv_description"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            app:srcCompat="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/tv_detail_name"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/title1_text"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/title1_top_padding"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:paddingBottom="@dimen/title1_bottom_padding"
-            android:paddingRight="@dimen/title1_right_and_left_padding"
             android:paddingLeft="@dimen/title1_right_and_left_padding"
+            android:paddingRight="@dimen/title1_right_and_left_padding"
+            android:paddingTop="@dimen/title1_top_padding"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintTop_toBottomOf="@+id/im_detail_car_image" />
+            android:textSize="@dimen/title1_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_detail_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/title2_text"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:paddingBottom="@dimen/title2_bottom_padding"
-            android:paddingRight="@dimen/title2_right_and_left_padding"
             android:paddingLeft="@dimen/title2_right_and_left_padding"
+            android:paddingRight="@dimen/title2_right_and_left_padding"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/title2_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/im_detail_car_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
 
         <TextView
@@ -54,13 +57,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:gravity="bottom"
             android:paddingLeft="@dimen/action_padding"
             android:paddingRight="@dimen/action_padding"
             android:text="@string/quantity"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/title2_text"
-            app:layout_constraintBottom_toTopOf="@+id/sp_quantity" />
+            app:layout_constraintBottom_toTopOf="@+id/sp_quantity"
+            app:layout_constraintEnd_toStartOf="@+id/b_add" />
 
         <Spinner
             android:id="@+id/sp_quantity"
@@ -68,18 +73,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/b_add"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b_add" />
 
         <Button
             android:id="@+id/b_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:paddingBottom="@dimen/action_padding"
             android:paddingTop="@dimen/action_padding"
             android:text="@string/add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_detail_quantity" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,9 +100,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             card_view:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
 

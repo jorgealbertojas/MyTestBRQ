@@ -131,7 +131,7 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     @Override
     public void completePurchase(@NonNull Purchase completedPurchase) {
         checkNotNull(completedPurchase, "completedTask cannot be null!");
-        mShoppingRepository.completePurchase(completedPurchase,"111");
+        mShoppingRepository.completePurchase(completedPurchase,"1");
         mShoppingView.showPurchaseMarkedComplete();
         loadShopping(false, false);
 

@@ -350,7 +350,8 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     public void showDetail(int carId) {
         Intent intent = new Intent(getContext(), DetailCarActivity.class);
         intent.putExtra(EXTRA_CAR_ID, Integer.toString(carId));
-        getContext().startActivity(intent);
+        startActivityForResult(intent, ShoppingActivity.REQUEST_FINALIZE_SHOPPING);
+       // getContext().startActivity(intent);
     }
 
     public interface ItemListener {
@@ -366,6 +367,11 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     @Override
     public void showShoppingEmpty() {
         showMessage(getString(R.string.shopping_empty));
+    }
+
+    @Override
+    public void showDetailEmpty() {
+        showMessage(getString(R.string.detail_empty));
     }
 
     private void showMessage(String message) {

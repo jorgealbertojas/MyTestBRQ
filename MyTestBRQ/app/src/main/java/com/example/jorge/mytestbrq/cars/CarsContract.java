@@ -26,6 +26,8 @@ public interface CarsContract {
 
         void showShoppingEmpty();
 
+        void showDetailEmpty();
+
         void showShopping();
 
         void showDetail(int carId);

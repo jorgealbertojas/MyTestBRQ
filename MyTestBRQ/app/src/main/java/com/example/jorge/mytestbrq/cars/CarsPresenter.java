@@ -33,6 +33,8 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
             mCarsContractView.showSuccessfullySavedMessage();
         }else if (ShoppingActivity.REQUEST_FINALIZE_SHOPPING == requestCode && ShoppingActivity.REQUEST_EMPTY_SHOPPING == resultCode) {
             mCarsContractView.showShoppingEmpty();
+        }else if (ShoppingActivity.REQUEST_FINALIZE_SHOPPING == requestCode && ShoppingActivity.REQUEST_EMPTY_DETAIL == resultCode) {
+            mCarsContractView.showDetailEmpty();
 
         }
     }

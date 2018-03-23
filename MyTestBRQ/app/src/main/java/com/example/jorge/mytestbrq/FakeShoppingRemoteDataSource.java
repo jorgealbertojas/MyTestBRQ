@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * Created by jorge on 19/03/2018.
+ * This function is make for the test with android
+ * Have objective create data Fake in this Class for Test All the system
  */
 
 public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
@@ -32,24 +34,19 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
     }
 
 
-
     @Override
     public void getShopping(@NonNull LoadShoppingCallback callback) {
-      //  callback.onShoppingLoaded(Lists.newArrayList(TASKS_SERVICE_DATA.values()));
+
     }
 
     @Override
     public void getPurchase(@NonNull String shoppingId, @NonNull GetPurchaseCallback callback) {
-     //   Purchase purchase = TASKS_SERVICE_DATA.get(shoppingId);
-      //  callback.onPurchaseLoaded(purchase);
+
     }
-
-
-
 
     @Override
     public void savePurchase(@NonNull Purchase purchase) {
-        //TASKS_SERVICE_DATA.put(purchase.getId(), purchase);
+
     }
 
     @Override
@@ -59,8 +56,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     @Override
     public void activatePurchase(@NonNull Purchase purchase, String quantity) {
-       //     Purchase activePurchase = new Purchase(purchase.getCarId(), purchase.getCarName(),purchase.getCarDescription(),purchase.getCarBrand(),quantity,purchase.getPrice(),purchase.getImage(), purchase.getId());
-       // TASKS_SERVICE_DATA.put(purchase.getId(), activePurchase);
+
     }
 
 
@@ -82,9 +78,7 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     @Override
     public void completePurchase(@NonNull Purchase purchase, String user) {
-        //Purchase completedTask = new Purchase(purchase.getCarId(), purchase.getCarName(),purchase.getCarDescription(),purchase.getCarBrand(),purchase.getQuantity(),purchase.getPrice(),purchase.getImage(), purchase.getId());
-      //  TASKS_SERVICE_DATA.put(purchase.getId(), completedTask);
-    }
+     }
 
 
     @Override
@@ -105,8 +99,6 @@ public class FakeShoppingRemoteDataSource implements ShoppingDataSource {
 
     @VisibleForTesting
     public void addShopping(Purchase... purchases) {
-        for (Purchase purchase : purchases) {
-            TASKS_SERVICE_DATA.put(purchase.getId(), purchase);
-        }
+
     }
 }

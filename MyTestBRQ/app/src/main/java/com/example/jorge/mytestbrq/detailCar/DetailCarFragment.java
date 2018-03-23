@@ -1,6 +1,7 @@
 package com.example.jorge.mytestbrq.detailCar;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.jorge.mytestbrq.shopping.ShoppingActivity.REQUEST_EMPTY_DETAIL;
+
 /**
  * Created by jorge on 19/03/2018.
  */
@@ -37,6 +40,8 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
     private TextView mCarDescription;
     private Button mAdd;
     private Spinner mQuantity;
+    private TextView mName;
+    private ImageView mBack;
 
     private DetailCar mDetailCar;
 
@@ -59,6 +64,7 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
     public void onResume() {
         super.onResume();
         mActionsListener.loadingDetailCar();
+        //if (mActionsListener.)
     }
 
     @Override
@@ -70,6 +76,18 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
         mCarImage = (ImageView) root.findViewById(R.id.im_detail_car_image);
         mCarDescription = (TextView) root.findViewById(R.id.tv_detail_description);
         mQuantity = (Spinner) root.findViewById(R.id.sp_quantity);
+        mName = (TextView) root.findViewById(R.id.tv_detail_name);
+
+        mBack = (ImageView) root.findViewById(R.id.iv_back);
+
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+              }
+        });
+
+
 
         mAdd = (Button) root.findViewById(R.id.b_add);
         mAdd.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +110,18 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
     @Override
     public void showDetailCar(DetailCar detailCar) {
 
+        if (detailCar.getId() == 0){
+            getActivity().setResult(REQUEST_EMPTY_DETAIL);
+            getActivity().finish();
+
+        }
+
         mDetailCar = detailCar;
         addItemsQuantity(mDetailCar.getQuantidade());
 
         mCarDescription.setText(detailCar.getDescricao());
+
+        mName.setText(detailCar.getNome());
 
         Picasso.with(mCarDescription.getContext())
                 .load(detailCar.getImagem())
