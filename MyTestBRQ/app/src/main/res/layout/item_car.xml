@@ -36,7 +36,6 @@
             android:paddingBottom="@dimen/title1_bottom_padding"
             android:paddingRight="@dimen/title1_right_and_left_padding"
             android:paddingLeft="@dimen/title1_right_and_left_padding"
-            android:text="Carro"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintTop_toBottomOf="@+id/im_car_image" />
         <TextView

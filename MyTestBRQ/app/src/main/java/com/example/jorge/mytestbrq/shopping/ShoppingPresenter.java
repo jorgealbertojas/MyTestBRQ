@@ -155,10 +155,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
         mShoppingView.showCarsList();
     }
 
-    @Override
-    public void clearCompletedShopping() {
-    }
-
 
     private void processTasks(List<Purchase> purchaseList) {
 

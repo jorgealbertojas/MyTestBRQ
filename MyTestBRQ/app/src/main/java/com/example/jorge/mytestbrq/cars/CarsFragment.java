@@ -222,7 +222,7 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     .into(viewHolder.carImage);
 
             viewHolder.description.setText(cars.getNome());
-            viewHolder.price.setText(Integer.toString(cars.getPreco()));
+            viewHolder.price.setText(getResources().getString(R.string.format_value) + Integer.toString(cars.getPreco()));
         }
 
         public void replaceData(List<Cars> notes) {

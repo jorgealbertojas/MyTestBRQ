@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -17,14 +18,19 @@
             <LinearLayout
                 android:id="@+id/noShopping"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="100dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/tv_noShoppingMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/action_padding"
+                    android:layout_margin="@dimen/action_margin"
+                    android:src="@drawable/ic_remove_shopping_cart_white_24dp"
                     android:layout_marginBottom="@dimen/list_item_padding"
+                    android:background="@drawable/rounded_solid_textview"
                     android:text="tv_noShoppingMain" />
 
                 <TextView
@@ -33,7 +39,9 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="tv_noShoppingAdd" />
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:text="@string/shopping_empty" />
 
             </LinearLayout>
 
@@ -52,7 +60,6 @@
 
 
             <LinearLayout
-                android:id="@+id/teste"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:gravity="bottom"
@@ -86,15 +93,17 @@
                         style="drawable/"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_textview"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/action_padding"
+                        android:layout_margin="@dimen/action_margin"
+                        android:background="@drawable/rounded_textview_border"
                         android:gravity="bottom"
-                        android:paddingLeft="@dimen/action_padding"
-                        android:paddingRight="@dimen/action_padding"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/title2_text"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_total_value"
@@ -103,13 +112,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_textview"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/rounded_textview_border"
+                        android:padding="@dimen/action_padding"
+                        android:layout_margin="@dimen/action_margin"
                         android:gravity="bottom"
-                        android:paddingLeft="@dimen/action_padding"
-                        android:paddingRight="@dimen/action_padding"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/title2_text"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_total_quantity" />
+                        app:layout_constraintEnd_toStartOf="@+id/tv_total_quantity"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>

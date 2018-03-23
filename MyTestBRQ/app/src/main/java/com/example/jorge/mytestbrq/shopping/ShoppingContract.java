@@ -14,17 +14,20 @@ import java.util.List;
  */
 
 public interface ShoppingContract {
+
     interface View extends BaseView<Presenter> {
+
+        void ShowInformationShopping();
 
         void setLoadingIndicator(boolean active);
 
         void showShopping(List<Purchase> listPurchase);
 
-        void showAddPurchase();
-
         void showCarsList();
 
         void showCarsListEmpty();
+
+        void showMessageEmpty();
 
         void showPurchaseDetailsUi(String shoppingId);
 
@@ -32,21 +35,18 @@ public interface ShoppingContract {
 
         void showPurchaseMarkedActive();
 
-        void showCompletedShoppingCleared();
-
         void showLoadingShoppingError();
 
         void showNoShopping();
 
-        void showNoActiveShopping();
-
-        void showNoCompletedShopping();
 
         boolean isActive();
 
+        boolean isPurchasesGreater();
 
+        void showMessagePurchasesGreater();
 
-
+        void showDetail(int carId);
 
     }
 
@@ -63,8 +63,6 @@ public interface ShoppingContract {
         void activatePurchase(@NonNull Purchase activeShopping);
 
         void finalizeShopping(@NonNull String date);
-
-        void clearCompletedShopping();
 
     }
 }
