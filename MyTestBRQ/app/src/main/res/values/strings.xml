@@ -1,14 +1,24 @@
 <resources>
-    <string name="app_name">MyTestBRQ</string>
+    <string name="app_name">Web Car</string>
 
-    <string name="msg_error_return">Error in this operation</string>
-    <string name="msg_next_return">Next in this operation</string>
+    <string name="msg_error_return">Erro nesta operação.</string>
+    <string name="msg_next_return">Próxima operação.</string>
 
-    <string name="msg_success_return_update">Success update in this operation</string>
-    <string name="msg_success_return_delete">Success delete in this operation</string>
-    <string name="msg_success_return_insert">Success insert in this operation</string>
+    <string name="msg_success_return_update">Atualizado com suceeso!</string>
+    <string name="msg_success_return_delete">Deletado com suceeso!</string>
+    <string name="msg_success_return_insert">Adicionado com suceeso!</string>
 
-    <string name="successfully_saved_task_message">Finalizado a compra com sucesso!</string>
+    <string name="successfully_saved_task_message">Parabéns! Finalizada a compra com sucesso!</string>
+    <string name="conformation">Deseja finalizar compras?</string>
+
+    <string name="shopping_empty">Cesta vazia!</string>
+    <string name="shopping_only_100">Só pode fazer compras até R$ 100.000,00</string>
+
+    <string name="detail">Mais detalhes</string>
+    <string name="shopping">Comprar</string>
+    <string name="add">Adicionar</string>
+    <string name="quantity">Quantidade</string>
+    <string name="finalize_shopping">Finalizar compra!</string>
 
 
 </resources>

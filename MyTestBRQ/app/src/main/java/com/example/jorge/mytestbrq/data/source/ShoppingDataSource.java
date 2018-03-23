@@ -41,7 +41,7 @@ public interface ShoppingDataSource {
 
     void savePurchase(@NonNull Purchase purchase);
 
-    void activatePurchase(@NonNull String productI, String Quantity);
+    void activatePurchase(@NonNull String productId, String Quantity);
 
     void activatePurchase(@NonNull Purchase purchase, String Quantity);
 

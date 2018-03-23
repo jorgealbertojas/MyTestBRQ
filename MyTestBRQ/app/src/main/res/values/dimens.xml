@@ -8,4 +8,16 @@
 
     <dimen name="image_size">200dp</dimen>
 
+
+    <!-- Android Design guidelines. Cards with Actions -->
+    <dimen name="title1_text">24sp</dimen>
+    <dimen name="title1_top_padding">24dp</dimen>
+    <dimen name="title1_bottom_padding">16dp</dimen>
+    <dimen name="title1_right_and_left_padding">16dp</dimen>
+
+    <dimen name="title2_text">16sp</dimen>
+    <dimen name="title2_bottom_padding">16dp</dimen>
+    <dimen name="title2_right_and_left_padding">16dp</dimen>
+
+    <dimen name="action_padding">8dp</dimen>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.jorge.mytestbrq.shopping;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,13 +37,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 20/03/2018.
+ * Fragment Show shopping of the client
  */
 
 public class ShoppingFragment  extends Fragment implements ShoppingContract.View {
 
     private ShoppingContract.Presenter mPresenter;
-
-    private static final int REQUEST_FINALIZE_SHOPPING = 1;
 
     private ShoppingAdapter mListAdapter;
 
@@ -50,7 +52,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     private TextView mNoShoppingMainView;
     private TextView mNoShoppingAddView;
     private static ListView mListView;
-    private ImageView mFinalize;
+    private Button mFinalize;
 
     public static ShoppingFragment newInstance() {
         return new ShoppingFragment();
@@ -70,6 +72,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         @Override
         public void onPurchaseClick(Purchase clickedPurchase) {
             mPresenter.openPurchaseDetails(clickedPurchase);
+
         }
 
         @Override
@@ -85,11 +88,43 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         @Override
         public void onRemovePurchaseClick(String activatedPurchase, String quantity) {
             mPresenter.removeItemShopping(activatedPurchase, quantity);
+            if (mListAdapter.getCount() == 1 && quantity.equals("0")){
+                showCarsListEmpty();
+            }
+
         }
 
         @Override
-        public void onFinalizeShoppingClick(String date) {
-            mPresenter.finalizeShopping(date);
+        public void onFinalizeShoppingClick(final String date) {
+
+            LayoutInflater factory = LayoutInflater.from(getContext());
+            final View deleteDialogView = factory.inflate(
+                    R.layout.custom_dialog, null);
+            final AlertDialog deleteDialog = new AlertDialog.Builder(getContext()).create();
+            deleteDialog.setView(deleteDialogView);
+
+            TextView nTextView = (TextView) deleteDialogView.findViewById(R.id.txt_dia);
+            nTextView.setText(getContext().getResources().getString(R.string.conformation));
+
+            deleteDialogView.findViewById(R.id.btn_yes).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    mPresenter.finalizeShopping(date);
+                    deleteDialog.dismiss();
+                }
+            });
+            deleteDialogView.findViewById(R.id.btn_no).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    deleteDialog.dismiss();
+
+                }
+            });
+
+            deleteDialog.show();
+
         }
     };
 
@@ -113,7 +148,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         mListView.setAdapter(mListAdapter);
 
         mShoppingView = (LinearLayout) root.findViewById(R.id.ll_shopping);
-        mFinalize = (ImageView) getActivity().findViewById(R.id.iv_finalize);
+        mFinalize = (Button) root.findViewById(R.id.btn_finalize);
 
         // Set up  no Shopping view
         mNoShoppingView = root.findViewById(R.id.noShopping);
@@ -133,16 +168,15 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             @Override
             public void onClick(View v) {
 
-                Time today = new Time();
-                String month = Integer.toString(today.month) ;
-                String year = Integer.toString(today.year);
-                String day = Integer.toString(today.monthDay);
 
-                String hour = Integer.toString(today.month) ;
-                String minute = Integer.toString(today.year);
-                String second = Integer.toString(today.monthDay);
+                if (mShoppingView.getVisibility() == View.INVISIBLE) {
+                    showMessage(getContext().getResources().getString(R.string.shopping_empty));
+                }else{
 
-                mItemListener.onFinalizeShoppingClick(day + "/" + month + "/" + year + "  " + hour + ":" + minute +" "+ second);
+                    Date currentTime = Calendar.getInstance().getTime();
+
+                    mItemListener.onFinalizeShoppingClick((currentTime.toString()));
+                }
 
             }
         });
@@ -250,9 +284,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         showMessage("loading_purchase_error");
     }
 
-    private void showMessage(String message) {
-
-    }
 
     @Override
     public void showNoShopping() {
@@ -297,7 +328,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     }
 
 
-    private static class ShoppingAdapter extends BaseAdapter {
+    private class ShoppingAdapter extends BaseAdapter {
 
         private List<Purchase> mPurchaseList;
         private ShoppingItemListener mItemListener;
@@ -313,6 +344,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         }
 
         private void setList(List<Purchase> purchaseList) {
+
             mPurchaseList = checkNotNull(purchaseList);
         }
 
@@ -345,7 +377,7 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             TextView tvName = (TextView) rowView.findViewById(R.id.tv_shopping_name);
             final TextView tvQuantity = (TextView) rowView.findViewById(R.id.tv_shopping_quantity);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.iv_shopping_image);
-            ImageView ShoppingRemove = (ImageView) rowView.findViewById(R.id.iv_shopping_remove);
+            Button ShoppingRemove = (Button) rowView.findViewById(R.id.iv_shopping_remove);
 
             tvName.setText(purchase.getTitleForList());
             tvQuantity.setText(purchase.getQuantity());
@@ -369,6 +401,8 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
 
                     String quantity = getValueQuantity(tvQuantity);
                     mItemListener.onRemovePurchaseClick(purchase.getId(),quantity);
+
+
                 }
             });
 
@@ -410,6 +444,16 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
     public void showCarsList() {
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
+    }
+
+    @Override
+    public void showCarsListEmpty() {
+        mShoppingView.setVisibility(View.INVISIBLE);
+        mNoShoppingView.setVisibility(View.VISIBLE);
+    }
+
+    private void showMessage(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
     public interface ShoppingItemListener {

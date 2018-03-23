@@ -1,5 +1,6 @@
 package com.example.jorge.mytestbrq.data.source.cloud.cars;
 
+import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface CarsServiceApi {
     interface CarsServiceCallback<T> {
 
         void onLoaded(List<Cars> carsList);
+
     }
 
     void getCars(CarsServiceCallback<List<Cars>> callback);

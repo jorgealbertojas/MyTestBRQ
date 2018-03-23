@@ -77,6 +77,7 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                         if (shopping.isEmpty()) {
                             // This will be called if the table is new or just empty.
                             callback.onDataNotAvailable();
+                            Toast.makeText(mContext,mContext.getResources().getString(R.string.shopping_empty),Toast.LENGTH_LONG).show();
                         } else {
                             callback.onShoppingLoaded(shopping);
                         }

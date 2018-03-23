@@ -132,6 +132,8 @@ public class ShoppingRepository implements ShoppingDataSource{
 
         if (!quantity.toString().equals("0")) {
             checkNotNull(productId);
+
+            Purchase ooo = getPurchaseWithId(productId);
             activatePurchase(getPurchaseWithId(productId), quantity);
 
             Purchase purchase = getPurchaseWithId(productId);

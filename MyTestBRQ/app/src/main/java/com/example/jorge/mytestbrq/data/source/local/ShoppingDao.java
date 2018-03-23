@@ -27,7 +27,7 @@ public interface ShoppingDao {
     /**
      * Select a Purchase by id.
      */
-    @Query("SELECT * FROM Purchase WHERE entryid = :shoppingId and date isnull ")
+    @Query("SELECT * FROM Purchase WHERE cartid = :shoppingId and date isnull ")
     Purchase getPurchaseById(String shoppingId);
 
     /**

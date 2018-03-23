@@ -24,6 +24,8 @@ public interface ShoppingContract {
 
         void showCarsList();
 
+        void showCarsListEmpty();
+
         void showPurchaseDetailsUi(String shoppingId);
 
         void showPurchaseMarkedComplete();

@@ -22,16 +22,19 @@ public interface CarsContract {
 
         void showCars(List<Cars> carsList);
 
-        void showAllShopping();
-
         void showSuccessfullySavedMessage();
 
+        void showShoppingEmpty();
+
         void showShopping();
+
+        void showDetail(int carId);
     }
 
     interface UserActionsListener extends BasePresenter {
 
         void loadingCars();
+
 
         void openDetail(@NonNull Cars cars);
 

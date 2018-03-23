@@ -1,57 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/tasksContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_shopping"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <ListView
-                android:id="@+id/lv_shopping"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/noShopping"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:context=".purchaseDetail.PurchaseDetailActivity">
 
-            <TextView
-                android:id="@+id/tv_noShoppingMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="tv_noShoppingMain"
-                android:layout_marginBottom="@dimen/list_item_padding" />
+            <LinearLayout
+                android:id="@+id/noShopping"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
 
-            <TextView
-                android:id="@+id/tv_noShoppingAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="tv_noShoppingAdd" />
+                <TextView
+                    android:id="@+id/tv_noShoppingMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/list_item_padding"
+                    android:text="tv_noShoppingMain" />
 
+                <TextView
+                    android:id="@+id/tv_noShoppingAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="tv_noShoppingAdd" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_shopping"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:layout_weight="0.03"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/lv_shopping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/teste"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <Button
+                        android:id="@+id/btn_finalize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/finalize_shopping"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_total_quantity"
+                        style="drawable/"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/rounded_textview"
+                        android:gravity="bottom"
+                        android:paddingLeft="@dimen/action_padding"
+                        android:paddingRight="@dimen/action_padding"
+                        android:textSize="@dimen/title2_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_total_value"
+                        style="drawable/"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/rounded_textview"
+                        android:gravity="bottom"
+                        android:paddingLeft="@dimen/action_padding"
+                        android:paddingRight="@dimen/action_padding"
+                        android:textSize="@dimen/title2_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_total_quantity" />
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+
 </com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout>

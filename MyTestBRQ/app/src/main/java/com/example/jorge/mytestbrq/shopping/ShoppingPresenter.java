@@ -69,13 +69,15 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
-        EspressoIdlingResource.increment(); // App is busy until further notice
+        EspressoIdlingResource.increment();
 
         mShoppingRepository.getShopping(new ShoppingDataSource.LoadShoppingCallback() {
 
             @Override
             public void onShoppingLoaded(List<Purchase> purchaseList) {
                 List<Purchase> tasksToShow = new ArrayList<Purchase>();
+
+
 
                 // This callback may be called twice, once for the cache and once for loading
                 // the data from the server API, so we check before decrementing, otherwise
@@ -109,6 +111,8 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
                 }
                 mShoppingView.showLoadingShoppingError();
             }
+
+
         });
     }
 
@@ -157,6 +161,8 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
 
 
     private void processTasks(List<Purchase> purchaseList) {
+
+
         if (purchaseList.isEmpty()) {
             // Show a message indicating there are no tasks for that filter type.
             processEmptyTasks();

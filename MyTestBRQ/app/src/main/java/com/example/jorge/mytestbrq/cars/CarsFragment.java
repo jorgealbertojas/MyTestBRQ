@@ -21,6 +21,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,12 +97,12 @@ public class CarsFragment extends Fragment implements CarsContract.View {
 
         View root = inflater.inflate(R.layout.fragment_cars, container, false);
 
-        ImageView shopping  = (ImageView) root.findViewById(R.id.iv_shopping);
-        shopping.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showAllShopping();
-            }
-        });
+     //   ImageView shopping  = (ImageView) root.findViewById(R.id.iv_shopping);
+     //   shopping.setOnClickListener(new View.OnClickListener() {
+     //       public void onClick(View v) {
+      //         // showAllShopping();
+     //       }
+      //  });
 
         SwipeRefreshLayout swipeRefreshLayout =
                 (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
@@ -163,19 +164,6 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         mListAdapter.replaceData(carsList);
     }
 
-    @Override
-    public void showAllShopping() {
-
-   /*     Intent intent = new Intent(getActivity(), ShoppingActivity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_PRODUCT, null);
-
-        intent.putExtra(EXTRA_BUNDLE_PRODUCT, bundle);
-        startActivity(intent);*/
-    }
-
-
     /**
      * Init RecyclerView fro show list car
      * @param root
@@ -221,8 +209,6 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         public void onBindViewHolder(ViewHolder viewHolder, int position) {
             Cars cars = mCars.get(position);
 
-
-
             int imageDimension =
                     (int) viewHolder.carImage.getContext().getResources().getDimension(R.dimen.image_size);
 
@@ -235,33 +221,8 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     .placeholder(R.mipmap.ic_launcher)
                     .into(viewHolder.carImage);
 
-/*
-            Picasso.with(viewHolder.carImage.getContext())
-                    .load(cars.getImagem())
-                    .resize(imageDimension,imageDimension)
-                    .error(R.mipmap.ic_launcher)
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            assert viewHolder.carImage != null;
-                            viewHolder.carImage.setImageBitmap(bitmap);
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-                            viewHolder.carImage.setImageDrawable (errorDrawable);
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-                          //  viewHolder.carImage.setImageDrawable (placeHolderDrawable);
-                        }
-                    });
-*/
-
-
-            viewHolder.Description.setText(cars.getNome());
+            viewHolder.description.setText(cars.getNome());
+            viewHolder.price.setText(Integer.toString(cars.getPreco()));
         }
 
         public void replaceData(List<Cars> notes) {
@@ -287,18 +248,21 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             public ImageView carImage;
-            public TextView Description;
+            public TextView description;
+            public TextView price;
             private ItemListener mItemListener;
 
-            public ImageView carShopping;
+            public Button carShopping;
+            public Button carDetail;
 
             public ViewHolder(View itemView, ItemListener listener) {
                 super(itemView);
                 mItemListener = listener;
-                Description= (TextView) itemView.findViewById(R.id.tv_description);
+                description= (TextView) itemView.findViewById(R.id.tv_description);
+                price= (TextView) itemView.findViewById(R.id.tv_price);
                 carImage = (ImageView) itemView.findViewById(R.id.im_car_image);
-                carShopping = (ImageView) itemView.findViewById(R.id.iv_shopping_car);
-
+                carShopping = (Button) itemView.findViewById(R.id.iv_shopping_car);
+                carDetail = (Button) itemView.findViewById(R.id.iv_detail_car);
 
                 carShopping.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -308,21 +272,27 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                     }
                 });
 
+                carDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int position = getAdapterPosition();
+                        Cars cars = getItem(position);
+                        mItemListener.onCarsClick(cars);
+                        showDetail(cars.getId());
+
+
+                    }
+                });
+
                 itemView.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View v) {
-                int position = getAdapterPosition();
-                Cars cars = getItem(position);
-                mItemListener.onCarsClick(cars);
-
-                Intent intent = new Intent(v.getContext(), DetailCarActivity.class);
 
 
-                intent.putExtra(EXTRA_CAR_ID, Integer.toString(cars.getId()));
 
-                v.getContext().startActivity(intent);
             }
         }
     }
@@ -333,6 +303,14 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         startActivityForResult(intent, ShoppingActivity.REQUEST_FINALIZE_SHOPPING);
     }
 
+
+    @Override
+    public void showDetail(int carId) {
+        Intent intent = new Intent(getContext(), DetailCarActivity.class);
+        intent.putExtra(EXTRA_CAR_ID, Integer.toString(carId));
+        getContext().startActivity(intent);
+    }
+
     public interface ItemListener {
 
         void onCarsClick(Cars clickedNote);
@@ -341,6 +319,11 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     @Override
     public void showSuccessfullySavedMessage() {
         showMessage(getString(R.string.successfully_saved_task_message));
+    }
+
+    @Override
+    public void showShoppingEmpty() {
+        showMessage(getString(R.string.shopping_empty));
     }
 
     private void showMessage(String message) {
