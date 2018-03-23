@@ -23,9 +23,6 @@ public class CarsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cars);
 
 
-       // ActionBar ab = getSupportActionBar();
-       // ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-       // ab.setDisplayHomeAsUpEnabled(true);
 
         if (null == savedInstanceState) {
             if (Common.isOnline(this)) {

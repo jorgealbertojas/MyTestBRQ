@@ -48,6 +48,7 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
             public void onLoaded(List listCars) {
                 mCarsContractView.setLoading(false);
                 mCarsContractView.showCars(listCars);
+
             }
         });
 

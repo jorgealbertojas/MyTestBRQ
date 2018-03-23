@@ -440,7 +440,8 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
 
     @Override
     public void showPurchaseDetailsUi(String shoppingId) {
-        
+
+
     }
 
     private void showMessage(String message) {

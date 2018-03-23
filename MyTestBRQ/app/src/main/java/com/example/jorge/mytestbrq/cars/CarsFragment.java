@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -32,9 +33,11 @@ import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 import com.example.jorge.mytestbrq.detailCar.DetailCarActivity;
 import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 
+import com.example.jorge.mytestbrq.util.EndlessRecyclerViewScrollListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,13 +53,18 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     public static String EXTRA_CAR_ID = "CAR_ID";
 
     private CarsContract.UserActionsListener mActionsListener;
+    LinearLayoutManager mLinearLayoutManager;
+    private EndlessRecyclerViewScrollListener mScrollListener;
 
     private CarsAdapter mListAdapter;
     private RecyclerView mRecyclerView;
 
     private static Bundle mBundleRecyclerViewState;
     private final String KEY_RECYCLER_STATE = "RECYCLER_VIEW_STATE";
+    private final String KEY_ADAPTER_STATE = "ADAPTER_STATE";
     private Parcelable mListState;
+
+    private ArrayList<Cars> mListCars;
 
     /**
      * Constructor
@@ -75,15 +83,32 @@ public class CarsFragment extends Fragment implements CarsContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new CarsAdapter(new ArrayList<Cars>(0), mItemListener);
-        mActionsListener = new CarsPresenter(new CarsServiceImpl(), this);
+
+        if (savedInstanceState == null) {
+            mListAdapter = new CarsAdapter(new ArrayList<Cars>(0), mItemListener);
+            mActionsListener = new CarsPresenter(new CarsServiceImpl(), this);
+
+            mActionsListener.loadingCars();
+            mActionsListener.start();
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mActionsListener.loadingCars();
-        mActionsListener.start();
+
+
+        if (mBundleRecyclerViewState != null) {
+            mListState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            mListCars = (ArrayList<Cars>) mBundleRecyclerViewState.getSerializable(KEY_ADAPTER_STATE);
+
+        }
+
+       // mActionsListener.loadingCars();
+       // mActionsListener.start();
+
+
     }
 
     @Override
@@ -96,13 +121,6 @@ public class CarsFragment extends Fragment implements CarsContract.View {
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_cars, container, false);
-
-     //   ImageView shopping  = (ImageView) root.findViewById(R.id.iv_shopping);
-     //   shopping.setOnClickListener(new View.OnClickListener() {
-     //       public void onClick(View v) {
-      //         // showAllShopping();
-     //       }
-      //  });
 
         SwipeRefreshLayout swipeRefreshLayout =
                 (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
@@ -127,11 +145,33 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         }else{
             initRecyclerView(root);
             mListState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            mListCars = (ArrayList<Cars>) mBundleRecyclerViewState.getSerializable(KEY_ADAPTER_STATE);
             mRecyclerView.getLayoutManager().onRestoreInstanceState(mListState);
+            mListAdapter = new CarsAdapter(mListCars,mItemListener);
+            mRecyclerView.setAdapter(mListAdapter);
+
         }
 
         return root;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // save RecyclerView state
+/*        mBundleRecyclerViewState = new Bundle();
+        mListState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);*/
+
+        mBundleRecyclerViewState = new Bundle();
+        mListState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mListCars = (ArrayList<Cars>) mListAdapter.mCars;
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, mListState);
+        mBundleRecyclerViewState.putSerializable(KEY_ADAPTER_STATE, (Serializable) mListCars);
+
+    }
+
 
     /**
      * Listener which car click
@@ -161,6 +201,9 @@ public class CarsFragment extends Fragment implements CarsContract.View {
 
     @Override
     public void showCars(List<Cars> carsList) {
+        if (mRecyclerView.getAdapter().getItemCount() > 0) {
+            carsList.addAll((List<Cars>) mListAdapter.mCars);
+        }
         mListAdapter.replaceData(carsList);
     }
 
@@ -175,7 +218,18 @@ public class CarsFragment extends Fragment implements CarsContract.View {
         int numColumns = 1;
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mScrollListener = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                mActionsListener.loadingCars();
+                mActionsListener.start();
+
+            }
+        };
+        mRecyclerView.addOnScrollListener(mScrollListener);
+
     }
 
     @Override
