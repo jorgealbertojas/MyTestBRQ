@@ -4,6 +4,7 @@ import android.support.test.espresso.IdlingResource;
 
 /**
  * Created by jorge on 20/03/2018.
+ * Espresso for Id ling Resource
  */
 
 public class EspressoIdlingResource {

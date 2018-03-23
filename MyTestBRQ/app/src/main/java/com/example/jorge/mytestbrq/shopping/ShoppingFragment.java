@@ -2,7 +2,6 @@ package com.example.jorge.mytestbrq.shopping;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,33 +9,24 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.Purchase;
-import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 import com.example.jorge.mytestbrq.detailCar.DetailCarActivity;
 import com.example.jorge.mytestbrq.util.ScrollChildSwipeRefreshLayout;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import static com.example.jorge.mytestbrq.cars.CarsFragment.EXTRA_CAR_ID;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -144,8 +134,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
 
         }
     };
-
-
 
     @Override
     public void onResume() {
@@ -377,7 +365,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
             });
 
 
-
             ShoppingRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -479,8 +466,6 @@ public class ShoppingFragment  extends Fragment implements ShoppingContract.View
         mTotalQuantity.setText(totalQuantity);
         mTotalValue.setText(getResources().getString(R.string.format_value) + totalValue);
         mTotalValueShopping =  Double.valueOf(totalValue);
-
     }
-
 
 }

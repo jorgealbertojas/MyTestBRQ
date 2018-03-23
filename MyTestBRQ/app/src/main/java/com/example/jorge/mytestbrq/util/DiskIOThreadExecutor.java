@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by jorge on 19/03/2018.
+ * Disk for Thread Executor
  */
 
 public class DiskIOThreadExecutor implements Executor{

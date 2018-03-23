@@ -1,12 +1,9 @@
 package com.example.jorge.mytestbrq.detailCar;
 
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.source.cloud.detailCar.DetailCarServiceImpl;
 import com.example.jorge.mytestbrq.data.source.cloud.detailCar.model.DetailCar;
@@ -28,6 +24,7 @@ import static com.example.jorge.mytestbrq.shopping.ShoppingActivity.REQUEST_EMPT
 
 /**
  * Created by jorge on 19/03/2018.
+ * Detail fragment for show detail car
  */
 
 public class DetailCarFragment extends Fragment implements DetailCarContract.View {
@@ -64,7 +61,6 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
     public void onResume() {
         super.onResume();
         mActionsListener.loadingDetailCar();
-        //if (mActionsListener.)
     }
 
     @Override
@@ -87,8 +83,6 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
               }
         });
 
-
-
         mAdd = (Button) root.findViewById(R.id.b_add);
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +94,10 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
         return root;
     }
 
-
     @Override
     public void setLoading(boolean isActive) {
 
     }
-
 
     @Override
     public void showDetailCar(DetailCar detailCar) {
@@ -144,7 +136,6 @@ public class DetailCarFragment extends Fragment implements DetailCarContract.Vie
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mQuantity.setAdapter(dataAdapter);
     }
-
 
 }
 

@@ -8,6 +8,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jorge on 20/03/2018.
+ * Support Simple Counting for Id lingResource
  */
 
 public class SimpleCountingIdlingResource implements IdlingResource {

@@ -57,15 +57,16 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
     }
 
 
-
-
+    /**
+     * *************************************************************************************
+     * ATTENTION THESE PARAMETERS ARE ONLY USED IN THE TEST, WHEN IMPLEMENTED IN THE SYSTEM
+     * ***********************************************************************************
+     * Jorge Alberto in 23/03/2018
+     * ***********************************************************************************
+     * @param forceUpdate
+     * @param showLoadingUI
+     */
     private void loadShopping(boolean forceUpdate, final boolean showLoadingUI) {
-        if (showLoadingUI) {
-            //    mShoppingView.setLoadingIndicator(true);
-        }
-        if (forceUpdate) {
-            //    mShoppingRepository.refreshShopping();
-        }
 
         // The network request might be handled in a different thread so make sure Espresso knows
         // that the app is busy until the response is handled.
@@ -76,8 +77,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
             @Override
             public void onShoppingLoaded(List<Purchase> purchaseList) {
                 List<Purchase> tasksToShow = new ArrayList<Purchase>();
-
-
 
                 // This callback may be called twice, once for the cache and once for loading
                 // the data from the server API, so we check before decrementing, otherwise
@@ -112,15 +111,8 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
                 mShoppingView.showLoadingShoppingError();
             }
 
-
         });
     }
-
-
-
-
-
-
 
     @Override
     public void openPurchaseDetails(@NonNull Purchase requestedPurchase) {
@@ -134,16 +126,12 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
         mShoppingRepository.completePurchase(completedPurchase,"1");
         mShoppingView.showPurchaseMarkedComplete();
         loadShopping(false, false);
-
-
     }
 
 
     @Override
     public void activatePurchase(@NonNull Purchase activePurchase ) {
         checkNotNull(activePurchase, "activeTask cannot be null!");
-
-
         mShoppingRepository.activatePurchase(activePurchase.getId(), activePurchase.getQuantity());
         mShoppingView.showPurchaseMarkedActive();
         loadShopping(false, false);
@@ -157,7 +145,6 @@ public class ShoppingPresenter implements ShoppingContract.Presenter  {
 
 
     private void processTasks(List<Purchase> purchaseList) {
-
 
         if (purchaseList.isEmpty()) {
             // Show a message indicating there are no tasks for that filter type.

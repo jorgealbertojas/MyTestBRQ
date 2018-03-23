@@ -2,7 +2,6 @@ package com.example.jorge.mytestbrq.detailCar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.util.ActivityUtils;
 import com.example.jorge.mytestbrq.util.Common;

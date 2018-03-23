@@ -3,8 +3,6 @@ package com.example.jorge.mytestbrq.data.source.cloud.detailCar;
 
 import com.example.jorge.mytestbrq.data.source.cloud.detailCar.model.DetailCar;
 
-import java.util.concurrent.Callable;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

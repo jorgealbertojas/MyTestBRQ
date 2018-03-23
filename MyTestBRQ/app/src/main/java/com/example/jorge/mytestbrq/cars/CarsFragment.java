@@ -2,11 +2,6 @@ package com.example.jorge.mytestbrq.cars;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -14,19 +9,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.CarsServiceImpl;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
@@ -35,8 +25,6 @@ import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
 
 import com.example.jorge.mytestbrq.util.EndlessRecyclerViewScrollListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -8,6 +8,7 @@ import android.view.View;
 
 /**
  * Created by jorge on 20/03/2018.
+ * This support layout Scroll Child Swipe RefreshLayout
  */
 
 public class ScrollChildSwipeRefreshLayout extends SwipeRefreshLayout {

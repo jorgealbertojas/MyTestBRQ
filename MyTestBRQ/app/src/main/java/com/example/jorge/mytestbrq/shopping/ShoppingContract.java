@@ -1,12 +1,10 @@
 package com.example.jorge.mytestbrq.shopping;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 
+import android.support.annotation.NonNull;
 import com.example.jorge.mytestbrq.BasePresenter;
 import com.example.jorge.mytestbrq.BaseView;
 import com.example.jorge.mytestbrq.data.Purchase;
-
 import java.util.List;
 
 /**

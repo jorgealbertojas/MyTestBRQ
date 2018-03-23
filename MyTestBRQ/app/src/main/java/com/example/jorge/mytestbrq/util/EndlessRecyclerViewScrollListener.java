@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by jorge on 23/03/2018.
+ * This is used fro Support infinite Scroll RecyclerView
  */
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {

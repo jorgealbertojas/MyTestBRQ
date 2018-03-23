@@ -9,6 +9,7 @@ import com.example.jorge.mytestbrq.data.Purchase;
 
 /**
  * Created by jorge on 19/03/2018.
+ * Get Instance SQLLite
  */
 
 @Database(entities = {Purchase.class}, version = 1)

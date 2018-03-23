@@ -3,7 +3,6 @@ package com.example.jorge.mytestbrq.cars;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.CarsServiceApi;
 import com.example.jorge.mytestbrq.data.source.cloud.cars.model.Cars;
 import com.example.jorge.mytestbrq.shopping.ShoppingActivity;
@@ -65,6 +64,6 @@ public class CarsPresenter implements CarsContract.UserActionsListener {
 
     @Override
     public void start() {
-       // loadShopping(false);
+
     }
 }

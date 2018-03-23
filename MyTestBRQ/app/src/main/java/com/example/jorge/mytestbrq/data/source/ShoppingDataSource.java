@@ -26,8 +26,6 @@ public interface ShoppingDataSource {
 
     }
 
-
-
     interface GetPurchaseCallback {
 
         void onPurchaseLoaded(Purchase purchase);

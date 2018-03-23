@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * ATENÇÃO ESTES PARAMETROS SÓ SÃO USUADOS NOS TESTE, QUANDO IMPLEMENTADOS NO SISTEMA
  * Created by jorge on 19/03/2018.
  * This function is make for the test with android
  * Have objective create data Fake in this Class for Test All the system
+ * Jorge Alberto in 23/03/2018
  */
 
 public class FakeShoppingRemoteDataSource implements ShoppingDataSource {

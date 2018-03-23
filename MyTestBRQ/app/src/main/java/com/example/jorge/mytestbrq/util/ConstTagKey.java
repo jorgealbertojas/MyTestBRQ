@@ -2,6 +2,7 @@ package com.example.jorge.mytestbrq.util;
 
 /**
  * Created by jorge on 21/03/2018.
+ * Fro see Tag system for find error in LOG
  */
 
 public class ConstTagKey {

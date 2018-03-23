@@ -3,11 +3,8 @@ package com.example.jorge.mytestbrq.shopping;
 
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-
 import com.example.jorge.mytestbrq.Injection;
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.util.ActivityUtils;
@@ -23,13 +20,10 @@ public class ShoppingActivity extends AppCompatActivity {
 
     private ShoppingPresenter mShoppingPresenter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping);
-
 
         ShoppingFragment shoppingFragment =
                 (ShoppingFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
@@ -45,10 +39,7 @@ public class ShoppingActivity extends AppCompatActivity {
         mShoppingPresenter = new ShoppingPresenter(
                 Injection.provideShoppingRepository(getApplicationContext()), shoppingFragment);
 
-
     }
-
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -56,8 +47,6 @@ public class ShoppingActivity extends AppCompatActivity {
 
         super.onSaveInstanceState(outState);
     }
-
-
 
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
@@ -74,8 +63,6 @@ public class ShoppingActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 
 }
 

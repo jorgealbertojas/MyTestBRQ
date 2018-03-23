@@ -7,17 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.example.jorge.mytestbrq.R;
 import com.example.jorge.mytestbrq.data.Purchase;
 import com.example.jorge.mytestbrq.data.source.ShoppingDataSource;
 import com.example.jorge.mytestbrq.util.AppExecutors;
-
 import java.util.List;
-
 import rx.Observable;
 import rx.Subscriber;
-
 import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_COMPLETE;
 import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_ERROR;
 import static com.example.jorge.mytestbrq.util.ConstTagKey.TAG_NORMAL;
@@ -37,8 +33,6 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
     private AppExecutors mAppExecutors;
 
     private Context mContext;
-
-
 
 
     // Prevent direct instantiation.
@@ -83,10 +77,6 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
                         }
                     }
                 });
-
-
-
-
             }
         };
 
@@ -118,10 +108,6 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
 
         mAppExecutors.diskIO().execute(runnable);
     }
-
-
-
-
 
     @Override
     public void savePurchase(@NonNull final Purchase purchase) {
@@ -380,7 +366,6 @@ public class ShoppingLocalDataSource implements ShoppingDataSource {
             }
         }
     };
-
 
 
     @VisibleForTesting

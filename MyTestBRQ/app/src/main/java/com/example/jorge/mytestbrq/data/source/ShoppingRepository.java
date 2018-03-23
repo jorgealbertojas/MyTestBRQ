@@ -36,8 +36,6 @@ public class ShoppingRepository implements ShoppingDataSource{
         mShoppingLocalDataSource = checkNotNull(shoppingLocalDataSource);
     }
 
-
-
     public static ShoppingRepository getInstance(ShoppingDataSource ShoppingRemoteDataSource,
                                                  ShoppingDataSource ShoppingLocalDataSource) {
         if (INSTANCE == null) {
@@ -56,7 +54,6 @@ public class ShoppingRepository implements ShoppingDataSource{
     public void getShopping(@NonNull final LoadShoppingCallback callback) {
         checkNotNull(callback);
 
-
         // Query the local storage if available. If not, query the network.
         mShoppingLocalDataSource.getShopping(new LoadShoppingCallback() {
 
@@ -71,7 +68,7 @@ public class ShoppingRepository implements ShoppingDataSource{
                 getShoppingFromRemoteDataSource(callback);
             }
         });
-        //}
+
     }
 
     @Override
@@ -133,7 +130,6 @@ public class ShoppingRepository implements ShoppingDataSource{
         if (!quantity.toString().equals("0")) {
             checkNotNull(productId);
 
-            Purchase ooo = getPurchaseWithId(productId);
             activatePurchase(getPurchaseWithId(productId), quantity);
 
             Purchase purchase = getPurchaseWithId(productId);
@@ -248,14 +244,6 @@ public class ShoppingRepository implements ShoppingDataSource{
             }
         });
     }
-
-
-
-
-
-
-
-
 
     private void refreshCache(List<Purchase> purchaseList) {
         if (mCachedShopping == null) {
